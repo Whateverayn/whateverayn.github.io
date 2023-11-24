@@ -1,0 +1,16 @@
+:root {
+    --general-fonts: 'Neue Haas Grotesk Text Pro',
+        'ヒラギノ角ゴ ProN',
+        'Yu Gothic UI',
+        system-ui;
+}
+
+body {
+    font-family: var(--general-fonts);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
