@@ -12,5 +12,88 @@ body {
 @media (prefers-color-scheme: dark) {
     :root {
         color-scheme: dark;
+        --input-bg: #2d2d2d;
+        --input-bg-hover: #323232;
+        --input-bg-focus: #1f1f1f;
+        --input-bg-seleciton: #00867a;
+        --input-border-main: #303030;
+        --input-border-key: #9a9a9a;
+        --input-border-key-focus: #2ffff5;
+        --input-caret: #e0e0e0;
+        --button-bg: #2d2d2d;
+        --button-bg-hover: #323232;
+        --button-bg-active: #272727;
+        --button-border: #303030;
+        --button-border-top: #353535;
+        --button-color-active: #cdcdcd;
+        --button-outline-focus: #ffffff;
     }
+}
+
+code {
+    font-family: Consolas, 'Courier New', 'ヒラギノ角ゴ ProN', monospace;
+}
+
+.generalInputText {
+    background: none;
+    outline: none;
+    margin: 0;
+    font-family: var(--general-fonts);
+    font-size: 100%;
+    background-color: var(--input-bg);
+    border: 0.1rem solid var(--input-border-main);
+    border-bottom-color: var(--input-border-key);
+    border-radius: 4px;
+    caret-color: var(--input-caret);
+    padding: 5px 9px calc(5px - 0.1rem) 9px;
+    transition: background-color 0.3s, border-bottom-color 0.3s;
+    box-sizing: border-box;
+}
+
+.generalInputText::selection {
+    background-color: var(--input-bg-seleciton);
+}
+
+.generalInputText:hover:not(:focus) {
+    background-color: var(--input-bg-hover);
+}
+
+.generalInputText:focus {
+    accent-color: var(--input-border-key-focus);
+    border-bottom-color: var(--input-border-key-focus);
+    border-bottom-width: 0.15rem;
+    background-color: var(--input-bg-focus);
+    padding-bottom: calc(5px - 0.15rem);
+}
+
+.generalButton {
+    background: none;
+    outline: none;
+    margin: 0;
+    background-color: var(--button-bg);
+    font-family: var(--general-fonts);
+    font-size: 100%;
+    border: 1.5px solid var(--button-border);
+    border-top-color: var(--button-border-top);
+    border-radius: 4px;
+    padding: 4px 11px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.generalButton:hover:not(:active) {
+    background-color: var(--button-bg-hover);
+}
+
+.generalButton:active {
+    background-color: var(--button-bg-active);
+    border-top-color: var(--button-border);
+    color: var(--button-color-active);
+}
+
+.generalButton:focus {
+    outline-offset: 1px;
+    outline-color: var(--button-outline-focus);
+    outline-style: solid;
+    outline-width: 1px;
 }

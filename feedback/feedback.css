@@ -1,0 +1,66 @@
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+main>* {
+    max-width: 1024px;
+}
+
+#feedBasicInfo {
+    display: flex;
+    gap: 12px;
+}
+
+#feedBasicInfo>div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#feedContent {
+    display: flex;
+}
+
+#feedContent>textarea {
+    flex: 1;
+    resize: vertical;
+}
+#feedbackForm{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+#formButtonArea{
+    display: flex;
+    gap: 6px;
+}
+#formButtonArea > button{
+    flex: 1;
+}
+
+@media (min-width: 1025px) {
+    #feedBasicInfo {
+        flex-direction: row;
+    }
+
+    main {
+        align-items: center;
+    }
+
+    main>* {
+        width: 100%;
+    }
+    #formButtonArea{
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 1024px) {
+    #feedBasicInfo {
+        flex-direction: column;
+    }
+    #formButtonArea{
+        flex-direction: column;
+    }
+}
