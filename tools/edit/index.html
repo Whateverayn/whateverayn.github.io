@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: https://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>編集用</title>
+    <meta property="og:title" content="編集用" />
+    <meta name="description" content="このサイトを更新するためのページです.">
+    <meta property="og:description" content="このサイトを更新するためのページです." />
+    <meta property="og:site_name" content="Whateverayn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
+    <meta name="twitter:card" content="Summary Card" />
+    <meta name="theme-color" content="#363663">
+    <link rel="icon" href="/icons/icon-2.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="stylesheet" href="/core.css">
+    <script defer="defer" src="/core.js"></script>
+</head>
+
+<body>
+
+    <main id="root">
+        <link rel="stylesheet" href="./edit.css">
+        <form onsubmit="return false" id="dateTimeCalc">
+            <h2>日時</h2>
+            <pre><code>&#123;
+    "createdAt": "2023-11-25T13:51:00.000Z",
+    "updatedAt": "2023-11-25T13:51:00.000Z"
+&#125;</code></pre>
+            <div id="editTimeInput">
+                <label for="createDate">日付</label>
+                <input class="generalInputText" type="date" name="createDate" id="createDate" oninput="editCalcTime();">
+                <label for="createTime">時刻</label>
+                <input class="generalInputText" type="time" name="createTime" id="createTime" oninput="editCalcTime();">
+            </div>
+            <div id="editTimeOutput">
+                <input class="generalInputText" type="text" name="calcTime" id="calcTime">
+                <button class="generalButton" onclick="copyFromInputText('calcTime')">コピー</button>
+            </div>
+        </form>
+    </main>
+    <script type="application/json" id="pageInfo">
+        {
+            "createdAt": "2023-11-25T13:51:00.000Z",
+            "updatedAt": "2023-11-25T13:51:00.000Z",
+            "loadJs": ["./edit.js"]
+        }
+    </script>
+
+    <!-- "alwaysRefresh": true -->
+
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: https://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>フィードバック</title>
+    <meta property="og:title" content="フィードバック" />
+    <meta name="description" content="不具合の報告や指摘, 感想, 意見など">
+    <meta property="og:description" content="不具合の報告や指摘, 感想, 意見など" />
+    <meta property="og:site_name" content="Whateverayn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
+    <meta name="twitter:card" content="Summary Card" />
+    <meta name="theme-color" content="#363663">
+    <link rel="icon" href="/icons/icon-2.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="stylesheet" href="/core.css">
+    <script defer="defer" src="/core.js"></script>
+</head>
+
+<body>
+
+    <main id="root">
+        <link rel="stylesheet" href="./feedback.css">
+        <p>
+            現在，このページは制作中です.
+        </p>
+        <form action="" method="get" id="feedbackForm" onsubmit="return false">
+            <h2>お問い合わせフォーム</h2>
+            <div>
+                <div>
+                    <h3>
+                        基本情報
+                    </h3>
+                </div>
+                <div>
+                    <p>
+                        全てを入力する必用はありません.
+                        必要に応じて入力してください.
+                    </p>
+                </div>
+                <div id="feedBasicInfo">
+                    <div>
+                        <label for="name">名前</label>
+                        <input type="text" autocomplete="nickname" name="name" id="name" class="generalInputText">
+                    </div>
+                    <div>
+                        <label for="email">メールアドレス</label>
+                        <input type="email" name="email" id="email" class="generalInputText" autocomplete="email">
+                    </div>
+                    <div>
+                        <label for="username">ユーザーネーム</label>
+                        <input type="text" name="username" id="username" autocomplete="username" class="generalInputText">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <h3>
+                        内容
+                    </h3>
+                </div>
+                <div id="feedContent">
+                    <textarea name="content" id="" rows="10" class="generalInputText"></textarea>
+                </div>
+            </div>
+            <div id="formButtonArea">
+                <button type="submit" class="generalButton">送信</button>
+            </div>
+        </form>
+    </main>
+    <script type="application/json" id="pageInfo">
+        {
+        }
+    </script>
+
+    <!-- "alwaysRefresh": true -->
+
+</body>
+
+</html>

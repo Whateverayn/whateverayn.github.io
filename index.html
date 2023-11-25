@@ -10,7 +10,6 @@
     <meta property="og:description" content="Whateveraynのページ" />
     <meta property="og:site_name" content="Whateverayn" />
     <meta property="og:type" content="blog" />
-    <meta property="og:url" content="https://whateverayn.github.io/" />
     <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
     <meta name="twitter:card" content="Summary Card" />
     <meta name="theme-color" content="#363663">
@@ -21,29 +20,35 @@
 </head>
 
 <body>
-
     <main id="root">
         <article>
-            <h2>こんにちは</h2>
-            <p>
-                こんにちは.
-                Whateverayn です.
-                Whateverayn に特に意味はありません.
-                ランダムな文字列を適当に生成したと思います.
-            </p>
-            <p>
-                おかしなタグの使い方をしていたり, 誤字があったりするのを見つけた方はそれを報告していただけると助かります.
-            </p>
+            <ul>
+                <li>
+                    <auto-link href="/about/">
+                        <a href="/about/">/about/</a>
+                    </auto-link>
+                </li>
+                <li>
+                    <auto-link href="/feedback/">
+                        <a href="/feedback/">/feedback/</a>
+                    </auto-link>
+                </li>
+                <li>
+                    <auto-link href="/tools/">
+                        <a href="/tools/">/tools/</a>
+                    </auto-link>
+                </li>
+                <li>
+                    <auto-link href="/p/">
+                        <a href="/p/">/p/</a>
+                    </auto-link>
+                </li>
+            </ul>
         </article>
     </main>
-
-
-    <script>
-        let pageInfo = {
-
-        };
-        // title: "same",
-        // description: "same",
+    <script type="application/json" id="pageInfo">
+        {
+        }
     </script>
 </body>
 

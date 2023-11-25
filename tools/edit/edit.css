@@ -1,0 +1,50 @@
+main {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+#editTimeInput {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 6px;
+    align-items: center;
+}
+
+#editTimeOutput {
+    display: grid;
+    grid-template-columns: 1fr 145px;
+    gap: 6px;
+    align-items: center;
+}
+
+#dateTimeCalc {
+    display: grid;
+    grid-template-rows: auto auto;
+    gap: 12px;
+    max-width: 1024px;
+}
+
+#createDate,
+#createTime {
+    width: 100%;
+}
+
+@media (min-width: 1025px) {
+    main {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: left;
+    }
+
+    main>* {
+        min-width: 509px;
+    }
+}
+
+@media (max-width: 1024px) {
+    main {
+        flex-direction: column;
+        flex: 1;
+    }
+}
