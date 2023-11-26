@@ -5,13 +5,13 @@
         system-ui;
 }
 
-body {
-    font-family: var(--general-fonts);
-}
-
 @media (prefers-color-scheme: dark) {
     :root {
         color-scheme: dark;
+        --stateHeight: 0px;
+        --body-padding-bottom: 0;
+        --body-bg: #000000;
+        --dialog-bg: rgba(107, 107, 107, 0.3);
         --input-bg: #2d2d2d;
         --input-bg-hover: #323232;
         --input-bg-focus: #1f1f1f;
@@ -30,8 +30,33 @@ body {
     }
 }
 
+html{
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    scrollbar-gutter: stable both-edges;
+}
+
+body {
+    font-family: var(--general-fonts);
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    transform: all 3s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#headerTitle h1{
+    margin-top: 0;
+}
+
 code {
     font-family: Consolas, 'Courier New', 'ヒラギノ角ゴ ProN', monospace;
+}
+
+main{
+    padding: 0px 12px 0px 12px;
+    box-sizing: border-box;
 }
 
 .generalInputText {
@@ -96,4 +121,35 @@ code {
     outline-color: var(--button-outline-focus);
     outline-style: solid;
     outline-width: 1px;
+}
+
+#stateInfoOut {
+    background-color: var(--dialog-bg);
+    backdrop-filter: saturate(180%) blur(20px);
+    position: sticky;
+    box-sizing: border-box;
+    bottom: 12px;
+    padding: 12px 12px 12px 12px;
+    margin: 0 12px 0 12px;
+    max-height: 50dvh;
+    height: var(--stateHeight);
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    scrollbar-gutter: stable;
+    transition: all .3s;
+    border-radius: 12px;
+}
+#stateInfoOut[data-state="hide"]{
+    height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    pointer-events: none;
+    opacity: 0;
+}
+#stateInfoOut::-webkit-scrollbar{
+    display: none;
+}
+#stateInfo{
+    overflow-y: hidden;
 }
