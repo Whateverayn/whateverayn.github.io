@@ -15,11 +15,13 @@ function generateGlobalComponents() {
                 </a>
             </div>
             <hr>
-        </header>`);
+        </header>
+        <nav>${showPath().outerHTML}</nav>
+        `);
     mainroot.insertAdjacentHTML('afterend', `
         <footer>
             <hr>
-            ${showPath().outerHTML}
+            
             <p id="pageInfoDescription">${pageInfo.description}</p>
         </footer>
         <div id="stateInfoOut"><div id="stateInfo"></div></div>
@@ -153,20 +155,22 @@ function linkClickHandler(event, url) {
 function showPath() {
     let pathSegments = window.location.pathname.split('/').filter(segment => segment !== ''); // パスを / で分割して空のセグメントを削除
     pathSegments.unshift('');
-    const output = document.createElement('div');
+    const output = document.createElement('ul');
     output.id = 'pagePath';
     let currentPath = '';
+    let currentSpace = '';
     pathSegments.forEach(segment => {
-        if (segment != '') {
-            const separator = document.createElement('span');
-            separator.textContent = ' > ';
-            output.appendChild(separator);
-        }
         currentPath += segment + '/';
+        let linkli = document.createElement('li');
+        let space = document.createElement('span');
+        space.innerHTML = currentSpace;
         let link = document.createElement('auto-link');
         link.setAttribute("href", currentPath)
         link.textContent = currentPath;
-        output.appendChild(link);
+        linkli.appendChild(space);
+        linkli.appendChild(link);
+        output.appendChild(linkli);
+        currentSpace += '&thinsp;';
     });
     return output;
 }
@@ -217,17 +221,22 @@ function exURL(url) {
 
 // ページタイトルを取得
 async function getPageTitleFromURL(url) {
-    const pageGetId = addState(exURL(url) + ' の情報を取得しています...', 0);
-    try {
-        const response = await fetch(url);
-        const html = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        removeStateAndChange(pageGetId, { message: exURL(url) + ' の情報を取得しました', duration: 2048 });
-        return doc.title;
-    } catch (error) {
-        console.error("ページの取得エラー:", error);
-        return 'Error';
+    if (url in pageTitle) {
+        return pageTitle[url];
+    } else {        
+        const pageGetId = addState(exURL(url) + ' の情報を取得しています...', 0);
+        try {
+            const response = await fetch(url);
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            removeStateAndChange(pageGetId, { message: exURL(url) + ' の情報を取得しました', duration: 2048 });
+            pageTitle[url] = doc.title;
+            return doc.title;
+        } catch (error) {
+            console.error("ページの取得エラー:", error);
+            return 'Error';
+        }
     }
 }
 
@@ -246,7 +255,7 @@ class AutoLink extends HTMLElement {
         linkElement.textContent = pageTitle;
         // 元の <auto-link> を <a> タグに置き換え
         this.replaceWith(linkElement);
-        removeStateAndChange(autoLinkId, { message: this.getAttribute('href') + ' を広げました', duration: 2048 });
+        removeStateAndChange(autoLinkId, { message: this.getAttribute('href') + ' を広げました', duration: 1024 });
     }
 }
 
@@ -272,5 +281,6 @@ window.onpopstate = (event) => {
 };
 
 let pageInfo = {};
+let pageTitle = {};
 let jsFilesToRemove = [];
 let messageCount = 0;
