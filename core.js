@@ -7,6 +7,16 @@ function generateGlobalComponents() {
         pageInfo.description = document.querySelector("meta[name='description']").content;
     }
 
+    if (pageInfo.createdAt) {
+        // formatDate(pageInfo.createdAt, 'YYYYMMDD-HHmmss')
+        pageCreate = `${formatDate(new Date(pageInfo.createdAt), 'YYYY年M月D日H時mm分')}作成`;
+        if (pageInfo.updatedAt) {
+            pageCreate += `, ${formatDate(new Date(pageInfo.updatedAt), 'YYYY年M月D日H時mm分')}更新`;
+        }
+    }else{
+        pageCreate = '';
+    }
+
     mainroot.insertAdjacentHTML('beforebegin', `
         <header>
             <div id="headerTitle">
@@ -21,6 +31,7 @@ function generateGlobalComponents() {
         <footer>
             <div>
                 <p id="pageInfoDescription">${pageInfo.description}</p>
+                <p id="pageUpdateInfo">${pageCreate}</p>
             </div>
         </footer>
         <div id="stateInfoOut"><div id="stateInfo"></div></div>
@@ -39,8 +50,18 @@ function updateGlobalComponents() {
         pageInfo.description = document.querySelector("meta[name='description']").content;
     } else {
     }
+    if (pageInfo.createdAt) {
+        // formatDate(pageInfo.createdAt, 'YYYYMMDD-HHmmss')
+        pageCreate = `${formatDate(new Date(pageInfo.createdAt), 'YYYY年M月D日H時mm分')}作成`;
+        if (pageInfo.updatedAt) {
+            pageCreate += `, ${formatDate(new Date(pageInfo.updatedAt), 'YYYY年M月D日H時mm分')}更新`;
+        }
+    }else{
+        pageCreate = '';
+    }
     document.getElementById("pageInfoTitle").innerHTML = pageInfo.title;
     document.getElementById("pageInfoDescription").innerHTML = pageInfo.description;
+    document.getElementById("pageUpdateInfo").innerHTML = pageCreate;
     document.getElementById('pagePath').replaceWith(showPath('pagePath'));
     insertScript(pageInfo);
     removeStateAndChange(updateGlobalComponentsId, { message: `コンポーネントを更新しました`, duration: 2048 })
@@ -174,6 +195,32 @@ function showPath() {
     return output;
 }
 
+function formatDate(date, format) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const month_short = String(date.getMonth() + 1);
+    const day = String(date.getDate()).padStart(2, '0');
+    const day_short = String(date.getDate());
+    const hours = String(date.getHours()).padStart(2, '0');
+    const hours_short = String(date.getHours());
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const minutes_short = String(date.getMinutes());
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    format = format.replace('YYYY', year);
+    format = format.replace('MM', month);
+    format = format.replace('M', month_short);
+    format = format.replace('DD', day);
+    format = format.replace('D', day_short);
+    format = format.replace('HH', hours);
+    format = format.replace('H', hours_short);
+    format = format.replace('mm', minutes);
+    format = format.replace('m', minutes_short);
+    format = format.replace('ss', seconds);
+
+    return format;
+}
+
 function insertScript(pageInfo) {
     if (pageInfo.loadJs && Array.isArray(pageInfo.loadJs)) {
         // loadJsが存在し、かつその値が配列の場合
@@ -283,3 +330,4 @@ let pageInfo = {};
 let pageTitle = {};
 let jsFilesToRemove = [];
 let messageCount = 0;
+let pageCreate = '';
