@@ -14,15 +14,14 @@ function generateGlobalComponents() {
                     <h1 id="pageInfoTitle">${pageInfo.title}</h1>
                 </a>
             </div>
-            <hr>
         </header>
         <nav>${showPath().outerHTML}</nav>
         `);
     mainroot.insertAdjacentHTML('afterend', `
         <footer>
-            <hr>
-            
-            <p id="pageInfoDescription">${pageInfo.description}</p>
+            <div>
+                <p id="pageInfoDescription">${pageInfo.description}</p>
+            </div>
         </footer>
         <div id="stateInfoOut"><div id="stateInfo"></div></div>
         `);
