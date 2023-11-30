@@ -51,7 +51,6 @@ function updateGlobalComponents() {
     } else {
     }
     if (pageInfo.createdAt) {
-        // formatDate(pageInfo.createdAt, 'YYYYMMDD-HHmmss')
         pageCreate = `${formatDate(new Date(pageInfo.createdAt), 'YYYY年M月D日H時mm分')}作成`;
         if (pageInfo.updatedAt) {
             pageCreate += `, ${formatDate(new Date(pageInfo.updatedAt), 'YYYY年M月D日H時mm分')}更新`;
@@ -64,7 +63,7 @@ function updateGlobalComponents() {
     document.getElementById("pageUpdateInfo").innerHTML = pageCreate;
     document.getElementById('pagePath').replaceWith(showPath('pagePath'));
     insertScript(pageInfo);
-    removeStateAndChange(updateGlobalComponentsId, { message: `コンポーネントを更新しました`, duration: 2048 })
+    removeStateAndChange(updateGlobalComponentsId, null)
 }
 
 // ページ遷移処理の関数
@@ -78,12 +77,12 @@ function navigateTo(url) {
             const parseId = addState(exURL(url) + 'inidex.html をパースしています...', 0);
             var parser = new DOMParser();
             var newDocument = parser.parseFromString(html, "text/html");
-            removeStateAndChange(parseId, { message: `${exURL(url)}index.html をパースしました`, duration: 2048 });
+            removeStateAndChange(parseId, null);
             // ページ辞書の初期化
             const pageInfoUpDateId = addState('ページ情報を更新しています...', 1024);
             pageInfo = {};
             pageInfo = JSON.parse(newDocument.getElementById('pageInfo').textContent);
-            removeStateAndChange(pageInfoUpDateId, { message: `ページ情報を更新しました`, duration: 2048 });
+            removeStateAndChange(pageInfoUpDateId, null);
             if (pageInfo.alwaysRefresh === true) {
                 addState(exURL(url) + ' を再読み込みしています... 再読み込みされない場合はブラウザの再読み込みボタンを押してください', 0);
                 pageRefresh(url);
@@ -95,7 +94,7 @@ function navigateTo(url) {
                 // 現在のページの<div id="root">の中身を新しい内容で差し替え
                 var newRootContent = newDocument.getElementById("root").innerHTML;
                 document.getElementById("root").innerHTML = newRootContent;
-                removeStateAndChange(pageUpdateId, { message: `ページを更新しました`, duration: 2048 })
+                removeStateAndChange(pageUpdateId, null);
                 updateGlobalComponents();
                 removeStateAndChange(navigateToId, { message: `${exURL(url)} へ移動しました`, duration: 2048 })
             }
@@ -128,6 +127,7 @@ function addState(message, duration) {
 function removeStateAndChange(messageId, newMessage) {
     if (document.getElementById(messageId)) {
         document.getElementById(messageId).remove();
+        stateSizeOptimize();
     }
     if (newMessage) {
         const newMessageId = addState(newMessage.message, newMessage.duration);
@@ -301,7 +301,7 @@ class AutoLink extends HTMLElement {
         linkElement.textContent = pageTitle;
         // 元の <auto-link> を <a> タグに置き換え
         this.replaceWith(linkElement);
-        removeStateAndChange(autoLinkId, { message: this.getAttribute('href') + ' を広げました', duration: 1024 });
+        removeStateAndChange(autoLinkId, null);
     }
 }
 
