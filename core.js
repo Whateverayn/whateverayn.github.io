@@ -1,4 +1,9 @@
 function generateGlobalComponents() {
+    fadeID.forEach(element => {
+        if (document.getElementById(element)) {
+            document.getElementById(element).dataset.processing = 'true';
+        }
+    });
     const mainroot = document.getElementById('root');
     if (!pageInfo.title) {
         pageInfo.title = document.title;
@@ -36,10 +41,16 @@ function generateGlobalComponents() {
         </footer>
         <div id="stateInfoOut"><div id="stateInfo"></div></div>
         `);
+        fadeID.forEach(element => {
+            document.getElementById(element).dataset.processing = 'false';
+        });
     addState('ようこそ&excl;', 4960);
 }
 
 function updateGlobalComponents() {
+    fadeID.forEach(element => {
+        document.getElementById(element).dataset.processing = 'true';
+    });
     const updateGlobalComponentsId = addState('コンポーネントを更新しています...', 0);
     removeScriptElements(jsFilesToRemove);
     if (!pageInfo.title) {
@@ -63,7 +74,10 @@ function updateGlobalComponents() {
     document.getElementById("pageUpdateInfo").innerHTML = pageCreate;
     document.getElementById('pagePath').replaceWith(showPath('pagePath'));
     insertScript(pageInfo);
-    removeStateAndChange(updateGlobalComponentsId, null)
+    removeStateAndChange(updateGlobalComponentsId, null);
+    fadeID.forEach(element => {
+        document.getElementById(element).dataset.processing = 'false';
+    });
 }
 
 // ページ遷移処理の関数
@@ -331,3 +345,4 @@ let pageTitle = {};
 let jsFilesToRemove = [];
 let messageCount = 0;
 let pageCreate = '';
+const fadeID = ['root', 'headerTitle', 'pageInfoDescription', 'pageUpdateInfo'];
