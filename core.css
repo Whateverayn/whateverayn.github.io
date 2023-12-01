@@ -3,6 +3,29 @@
         'ヒラギノ角ゴ ProN',
         'Yu Gothic UI',
         system-ui;
+    --body-bg: #f9f9f9;
+    --body-color: #1b1a1a;
+    --dialog-bg: rgba(200, 200, 200, 0.3);
+    --input-bg: #fbfbfb;
+    --input-bg-hover: #f6f6f6;
+    --input-bg-focus: #ffffff;
+    --input-bg-selection: #00867a;
+    --input-color-selection: #e4f2f1;
+    --input-border-main: #e5e5e5;
+    --input-border-key: #868686;
+    --input-border-key-focus: #006d60;
+    --input-caret: #161616;
+    --button-bg: #fbfbfb;
+    --button-bg-hover: #f7f7f7;
+    --button-bg-active: #f5f5f5;
+    --button-border: #e5e5e5;
+    --button-border-top: #e5e5e5;
+    --button-border-bottom: #cccccc;
+    --button-color-active: #606060;
+    --button-outline-focus: #1a1a1a;
+    --secondary-bg: #f3f3f3;
+    --secondary-border: #e5e5e5;
+    --accent-color: #333363;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,7 +39,8 @@
         --input-bg: #2d2d2d;
         --input-bg-hover: #323232;
         --input-bg-focus: #1f1f1f;
-        --input-bg-seleciton: #00867a;
+        --input-bg-selection: #00867a;
+        --input-color-selection: #ffffff;
         --input-border-main: #303030;
         --input-border-key: #9a9a9a;
         --input-border-key-focus: #2ffff5;
@@ -26,10 +50,12 @@
         --button-bg-active: #272727;
         --button-border: #303030;
         --button-border-top: #353535;
+        --button-border-bottom: #303030;
         --button-color-active: #cdcdcd;
         --button-outline-focus: #ffffff;
         --secondary-bg: #202020;
         --secondary-border: #232323;
+        --accent-color: #2ffff5;
     }
 }
 
@@ -86,11 +112,12 @@ nav {
 }
 
 #pageInfoDescription,
-#pageUpdateInfo{
+#pageUpdateInfo {
     transition: all 0.3s;
 }
+
 #pageInfoDescription[data-processing="true"],
-#pageUpdateInfo[data-processing="true"]{
+#pageUpdateInfo[data-processing="true"] {
     transition: all 0s;
     opacity: 0;
 }
@@ -147,7 +174,8 @@ footer>div>p:last-child {
 }
 
 .generalInputText::selection {
-    background-color: var(--input-bg-seleciton);
+    background-color: var(--input-bg-selection);
+    color: var(--input-color-selection);
 }
 
 .generalInputText:hover:not(:focus) {
@@ -171,6 +199,7 @@ footer>div>p:last-child {
     font-size: 100%;
     border: 1.5px solid var(--button-border);
     border-top-color: var(--button-border-top);
+    border-bottom-color: var(--button-border-bottom);
     border-radius: 4px;
     padding: 4px 11px;
     transition: all 0.3s;
@@ -192,6 +221,10 @@ footer>div>p:last-child {
     outline-color: var(--button-outline-focus);
     outline-style: solid;
     outline-width: 1px;
+}
+
+.generalCheckbox{
+    accent-color: var(--accent-color);
 }
 
 #stateInfoOut {
@@ -266,6 +299,10 @@ nav>ul>li>a:focus {
     outline-width: 1px;
 }
 
+.smallText{
+    font-size: small;
+}
+
 
 @media (max-width: 1023px) {
 
@@ -321,6 +358,8 @@ nav>ul>li>a:focus {
     /* 横幅が1024px以上の場合に適用するスタイル */
     body {
         grid-template-columns: auto 1fr;
+        grid-template-rows: auto 1fr auto auto;
+        min-height: 100%;
     }
 
     header {

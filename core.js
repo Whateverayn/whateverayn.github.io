@@ -110,7 +110,8 @@ function navigateTo(url) {
                 document.getElementById("root").innerHTML = newRootContent;
                 removeStateAndChange(pageUpdateId, null);
                 updateGlobalComponents();
-                removeStateAndChange(navigateToId, { message: `${exURL(url)} へ移動しました`, duration: 2048 })
+                removeStateAndChange(navigateToId, { message: `${exURL(url)} へ移動しました`, duration: 2048 });
+                pastPageURL.unshift(exURL(url));
             }
         })
         .catch(error => {
@@ -325,6 +326,7 @@ document.addEventListener("DOMContentLoaded", function () {
     insertScript(pageInfo);
     generateGlobalComponents();
     customElements.define('auto-link', AutoLink);
+    pastPageURL.unshift(location.href);
 });
 
 // イベントデリゲーションを使用したクリックハンドラ
@@ -345,4 +347,5 @@ let pageTitle = {};
 let jsFilesToRemove = [];
 let messageCount = 0;
 let pageCreate = '';
+let pastPageURL = [];
 const fadeID = ['root', 'headerTitle', 'pageInfoDescription', 'pageUpdateInfo'];
