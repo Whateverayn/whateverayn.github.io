@@ -1,9 +1,9 @@
-main {
+#feedback {
     display: flex;
     flex-direction: column;
 }
 
-main>* {
+#feedback>div>{
     max-width: 1024px;
 }
 
@@ -17,6 +17,20 @@ main>* {
     flex-direction: column;
     flex: 1;
 }
+#feedBasicInfo label:has(input[type="checkbox"]){
+    display: flex;
+    gap: 6px;
+    transition: all 0.3s;
+    border: 1.5px solid transparent;
+    border-radius: 4px;
+    padding-left: 6px;
+}
+#feedBasicInfo label:has(input[type="checkbox"]:checked){
+    background-color: var(--button-bg);
+    border-color: var(--button-border);
+    border-top-color: var(--button-border-top);
+    border-bottom-color: var(--button-border-bottom);
+}
 
 #feedContent {
     display: flex;
@@ -26,16 +40,19 @@ main>* {
     flex: 1;
     resize: vertical;
 }
-#feedbackForm{
+
+#feedbackForm {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-#formButtonArea{
+
+#formButtonArea {
     display: flex;
     gap: 6px;
 }
-#formButtonArea > button{
+
+#formButtonArea>button {
     flex: 1;
 }
 
@@ -44,14 +61,15 @@ main>* {
         flex-direction: row;
     }
 
-    main {
+    #feedback {
         align-items: center;
     }
 
-    main>* {
+    #feedback>div>* {
         width: 100%;
     }
-    #formButtonArea{
+
+    #formButtonArea {
         flex-direction: row;
     }
 }
@@ -60,7 +78,8 @@ main>* {
     #feedBasicInfo {
         flex-direction: column;
     }
-    #formButtonArea{
+
+    #formButtonArea {
         flex-direction: column;
     }
 }

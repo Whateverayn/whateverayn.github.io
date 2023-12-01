@@ -23,56 +23,87 @@
 
     <main id="root">
         <link rel="stylesheet" href="./feedback.css">
-        <p>
-            現在，このページは制作中です.
-        </p>
-        <form action="" method="get" id="feedbackForm" onsubmit="return false">
-            <h2>お問い合わせフォーム</h2>
+        <div id="feedback">
             <div>
-                <div>
-                    <h3>
-                        基本情報
-                    </h3>
-                </div>
-                <div>
-                    <p>
-                        全てを入力する必用はありません.
-                        必要に応じて入力してください.
-                    </p>
-                </div>
-                <div id="feedBasicInfo">
+                <form action="" method="get" id="feedbackForm" onsubmit="formSubmit(); return false">
                     <div>
-                        <label for="name">名前</label>
-                        <input type="text" autocomplete="nickname" name="name" id="name" class="generalInputText">
+                        <h2>お問い合わせフォーム</h2>
+                        <p>
+                            Google Forms を用いてフィードバックをお送りいただけます.
+                            お気軽にお送りください.
+                        </p>
                     </div>
                     <div>
-                        <label for="email">メールアドレス</label>
-                        <input type="email" name="email" id="email" class="generalInputText" autocomplete="email">
+                        <h3>基本情報 (任意)</h3>
+                        <p>
+                            基本情報の入力は任意です.
+                            返信を希望する場合や, 特定のデバイスで起こる問題の報告など, 必要に応じて入力してください.
+                            ただし, 連絡先を入力していただいても基本的に返信はしていません.
+                        </p>
+                        <div id="feedBasicInfo">
+                            <div>
+                                <label for="name">名前</label>
+                                <input type="text" autocomplete="nickname" name="name" id="name"
+                                    class="generalInputText" placeholder="Whateverayn">
+                            </div>
+                            <div>
+                                <label for="email">メールアドレス</label>
+                                <input type="email" name="email" id="email" class="generalInputText"
+                                    autocomplete="email" placeholder="whateverayn@example.com">
+                            </div>
+                            <div>
+                                <label for="username">ユーザーネーム</label>
+                                <input type="text" name="username" id="username" autocomplete="username"
+                                    class="generalInputText" placeholder="@username">
+                            </div>
+                            <div>
+                                <label for="page">
+                                    <input type="checkbox" name="page" id="page" class="generalCheckbox">
+                                    <div>
+                                        <div>ページのURLを含める</div>
+                                        <div class="smallText">特定のページに関する内容の場合はこれを含めてください</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="userAgent">
+                                    <input type="checkbox" name="userAgent" id="userAgent" class="generalCheckbox">
+                                    <div>
+                                        <div>このブラウザのユーザーエージェントを含める</div>
+                                        <div class="smallText">特定のブラウザで発生する問題がある場合はこれを含めてください</div>
+                                    </div>
+                                </label>
+                            </div>
+                            <div>
+                                <label for="screenSize">
+                                    <input type="checkbox" name="screenSize" id="screenSize" class="generalCheckbox">
+                                    <div>
+                                        <div>ビューポートの大きさを含める</div>
+                                        <div class="smallText">特定の画面サイズで起こる問題がある場合はこれを含めてください</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <div>
-                        <label for="username">ユーザーネーム</label>
-                        <input type="text" name="username" id="username" autocomplete="username" class="generalInputText">
+                        <h3>内容 (必須)</h3>
+                        <div id="feedContent">
+                            <textarea name="content" id="feedText" rows="10" class="generalInputText" required></textarea>
+                        </div>
                     </div>
-                </div>
+                    <div id="formButtonArea">
+                        <button type="submit" class="generalButton">Google Forms で送信</button>
+                    </div>
+                </form>
             </div>
-            <div>
-                <div>
-                    <h3>
-                        内容
-                    </h3>
-                </div>
-                <div id="feedContent">
-                    <textarea name="content" id="" rows="10" class="generalInputText"></textarea>
-                </div>
-            </div>
-            <div id="formButtonArea">
-                <button type="submit" class="generalButton">送信</button>
-            </div>
-        </form>
+        </div>
     </main>
 
     <script type="application/json" id="pageInfo">
         {
+            "createdAt": "2023-12-01T15:11:00.000Z",
+            "updatedAt": "2023-12-01T17:08:00.000Z",
+            "loadJs": ["./feedback.js"]
         }
     </script>
 
