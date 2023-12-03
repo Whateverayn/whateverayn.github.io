@@ -26,6 +26,9 @@
     --secondary-bg: #f3f3f3;
     --secondary-border: #e5e5e5;
     --accent-color: #333363;
+    --link-color: #333363;
+    --link-bg-hover: rgba(0, 0, 0, 0.035);
+    --link-bg-active: rgba(0, 0, 0, 0.025);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -56,6 +59,9 @@
         --secondary-bg: #202020;
         --secondary-border: #232323;
         --accent-color: #2ffff5;
+        --link-color: #75fffc;
+        --link-bg-hover: rgba(255, 255, 255, 0.175);
+        --link-bg-active: rgba(255, 255, 255, 0.16);
     }
 }
 
@@ -156,6 +162,21 @@ footer>div>p:last-child {
     margin-bottom: 0;
 }
 
+a {
+    color: var(--link-color);
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bolder;
+}
+
+a:hover {
+    background-color: var(--link-bg-hover);
+}
+
+a:active {
+    background-color: var(--link-bg-active);
+}
+
 .generalInputText {
     background: none;
     outline: none;
@@ -223,7 +244,7 @@ footer>div>p:last-child {
     outline-width: 1px;
 }
 
-.generalCheckbox{
+.generalCheckbox {
     accent-color: var(--accent-color);
 }
 
@@ -276,6 +297,7 @@ nav>ul>li>a {
     border: 1.5px solid transparent;
     border-radius: 4px;
     transition: all 0.3s;
+    font-weight: normal;
 }
 
 nav>ul>li>a:hover {
@@ -299,7 +321,7 @@ nav>ul>li>a:focus {
     outline-width: 1px;
 }
 
-.smallText{
+.smallText {
     font-size: small;
 }
 
