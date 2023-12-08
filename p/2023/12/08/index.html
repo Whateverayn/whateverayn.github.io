@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: https://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023年12月8日</title>
+    <meta property="og:title" content="2023年12月8日" />
+    <meta name="description" content="2023年12月8日の投稿です. 今日の改善点をここに記録しておきます.">
+    <meta property="og:description" content="2023年12月8日の投稿です. 今日の改善点をここに記録しておきます." />
+    <meta property="og:site_name" content="Whateverayn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
+    <meta name="twitter:card" content="Summary Card" />
+    <meta name="theme-color" content="#363663">
+    <link rel="icon" href="/icons/icon-2.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="stylesheet" href="/core.css">
+    <script defer="defer" src="/core.js"></script>
+</head>
+
+<body>
+
+    <main id="root">
+        <p>2023(令和5)年12月8日金曜日</p>
+        <h2>本日の改善点</h2>
+        <p>以下の改善を行いました.</p>
+        <dl>
+            <dt>ページ遷移時</dt>
+            <dd>
+                通信環境が悪く,
+                ページの遷移に時間がかかる場合に何度もクリックやタップをしてしまうことを防ぐために,
+                ページ遷移中は
+                <code>pointer-events: none;</code>
+                を用いて不適切な遷移をしないようにしました.
+                また,
+                「
+                <code>(移動先) へ移動しています...</code>
+                」というメッセージを表示するだけではなく,
+                <code>filter: blur(10px);</code>
+                で遷移中であることをよりわかりやすくしました.
+            </dd>
+        </dl>
+        <h2>今後の改善予定</h2>
+        <p>
+            改善予定を以下に示します.
+        </p>
+        <ul>
+            <li>
+                [新規]
+                <auto-link href="/tools/edit/">/tools/edit/</auto-link>
+                を幅の狭いディバイスで閲覧した場合に, コードの折り返しがされず, 横スクロールが発生する問題
+            </li>
+            <li>
+                <auto-link href="/feedback/">/feedback/</auto-link>
+                を1024px以上の幅で見た場合に, 基本情報の入力欄が全て横に並ぶ問題
+            </li>
+            <li>
+                <auto-link href="/tools/edit/">/tools/edit/</auto-link>
+                を1024px以上の幅で見た場合に, 多くの空間が開く問題
+            </li>
+            <li>
+                <auto-link href="/">/</auto-link>
+                の「最近」における自動表示
+            </li>
+            <li>複数の投稿を1つのページで一括表示</li>
+            <li>数式関係の検証</li>
+        </ul>
+        <p>
+            少しずつ改善していきたいと思います.
+        </p>
+    </main>
+    <script type="application/json" id="pageInfo">
+        {
+            "createdAt": "2023-12-08T16:27:00.000Z"
+        }
+    </script>
+
+    <!-- "alwaysRefresh": true -->
+
+</body>
+
+</html>
