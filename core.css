@@ -135,12 +135,17 @@ code {
 
 main {
     box-sizing: border-box;
-    transition: all 0.3s;
+    transition: all .3s;
 }
 
 main[data-processing="true"] {
     opacity: 0;
     transition: all 0s;
+}
+
+main[data-processing="processing"] {
+    pointer-events: none;
+    filter: blur(10px);
 }
 
 footer {

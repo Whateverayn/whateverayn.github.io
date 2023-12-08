@@ -14,9 +14,9 @@ function generateGlobalComponents() {
 
     if (pageInfo.createdAt) {
         // formatDate(pageInfo.createdAt, 'YYYYMMDD-HHmmss')
-        pageCreate = `${formatDate(new Date(pageInfo.createdAt), 'YYYY年M月D日H時mm分')}作成`;
+        pageCreate = `${formatDate(new Date(pageInfo.createdAt), 'YYYY年M月D日H時m分')}作成`;
         if (pageInfo.updatedAt) {
-            pageCreate += `, ${formatDate(new Date(pageInfo.updatedAt), 'YYYY年M月D日H時mm分')}更新`;
+            pageCreate += `, ${formatDate(new Date(pageInfo.updatedAt), 'YYYY年M月D日H時m分')}更新`;
         }
     }else{
         pageCreate = '';
@@ -82,6 +82,7 @@ function updateGlobalComponents() {
 
 // ページ遷移処理の関数
 function navigateTo(url) {
+    document.getElementById('root').dataset.processing = 'processing';
     const navigateToId = addState(exURL(url) + ' へ移動しています...', 0);
     // Ajaxを使ってHTMLファイルの内容を取得
     fetch(url)
