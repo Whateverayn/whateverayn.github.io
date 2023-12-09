@@ -25,10 +25,14 @@
         <link rel="stylesheet" href="./edit.css">
         <form onsubmit="return false" id="dateTimeCalc">
             <h2>日時</h2>
-            <pre><code>&#123;
-    "createdAt": "2023-11-25T13:51:00.000Z",
-    "updatedAt": "2023-11-25T13:51:00.000Z"
-&#125;</code></pre>
+            <div class="generalCode">
+                <code>
+                    &#123;<br>
+                    &ensp;"createdAt": "2023-11-25T13:51:00.000Z",<br>
+                    &ensp;"updatedAt": "2023-11-25T13:51:00.000Z"<br>
+                    &#125;
+                </code>
+            </div>
             <div id="editTimeInput">
                 <label for="createDate">日付</label>
                 <input class="generalInputText" type="date" name="createDate" id="createDate" oninput="editCalcTime();">
@@ -44,7 +48,7 @@
     <script type="application/json" id="pageInfo">
         {
             "createdAt": "2023-11-25T13:51:00.000Z",
-            "updatedAt": "2023-11-25T13:51:00.000Z",
+            "updatedAt": "2023-12-09T17:48:00.000Z",
             "loadJs": ["./edit.js"]
         }
     </script>
