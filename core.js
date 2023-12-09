@@ -18,7 +18,7 @@ function generateGlobalComponents() {
         if (pageInfo.updatedAt) {
             pageCreate += `, ${formatDate(new Date(pageInfo.updatedAt), 'YYYY年M月D日H時m分')}更新`;
         }
-    }else{
+    } else {
         pageCreate = '';
     }
 
@@ -41,9 +41,9 @@ function generateGlobalComponents() {
         </footer>
         <div id="stateInfoOut"><div id="stateInfo"></div></div>
         `);
-        fadeID.forEach(element => {
-            document.getElementById(element).dataset.processing = 'false';
-        });
+    fadeID.forEach(element => {
+        document.getElementById(element).dataset.processing = 'false';
+    });
     addState('ようこそ&excl;', 4960);
 }
 
@@ -66,7 +66,7 @@ function updateGlobalComponents() {
         if (pageInfo.updatedAt) {
             pageCreate += `, ${formatDate(new Date(pageInfo.updatedAt), 'YYYY年M月D日H時mm分')}更新`;
         }
-    }else{
+    } else {
         pageCreate = '';
     }
     document.getElementById("pageInfoTitle").innerHTML = pageInfo.title;
@@ -285,7 +285,7 @@ function exURL(url) {
 async function getPageTitleFromURL(url) {
     if (url in pageTitle) {
         return pageTitle[url];
-    } else {        
+    } else {
         const pageGetId = addState(exURL(url) + ' の情報を取得しています...', 0);
         try {
             const response = await fetch(url);
@@ -342,6 +342,24 @@ document.body.addEventListener('click', function (event) {
 window.onpopstate = (event) => {
     navigateTo(document.location);
 };
+
+(function () {
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=G-F3GN58W5S1';
+    document.head.appendChild(script);
+
+    script.onload = function () {
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-F3GN58W5S1');
+    };
+    console.log('読み込まれています.');
+    setTimeout(() => {
+        addState('読み込み', 3072);
+    }, 2000);
+})();
 
 let pageInfo = {};
 let pageTitle = {};
