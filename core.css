@@ -63,6 +63,9 @@
         --link-bg-hover: rgba(255, 255, 255, 0.175);
         --link-bg-active: rgba(255, 255, 255, 0.16);
     }
+    .svgAdaptive{
+        filter: invert(100%) hue-rotate(180deg);
+    }
 }
 
 html {
@@ -263,6 +266,10 @@ a:active {
 
 .generalCheckbox {
     accent-color: var(--accent-color);
+}
+
+.svgAdaptive{
+    max-width: 100%;
 }
 
 #stateInfoOut {

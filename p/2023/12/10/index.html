@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: https://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2023年12月10日</title>
+    <meta property="og:title" content="2023年12月10日" />
+    <meta name="description" content="2023年12月10日の投稿です. SVGでの数式の表示を試します.">
+    <meta property="og:description" content="2023年12月10日の投稿です. SVGでの数式の表示を試します." />
+    <meta property="og:site_name" content="Whateverayn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
+    <meta name="twitter:card" content="Summary Card" />
+    <meta name="theme-color" content="#363663">
+    <link rel="icon" href="/icons/icon-2.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="stylesheet" href="/core.css">
+    <script defer="defer" src="/core.js"></script>
+</head>
+
+<body>
+    <main id="root">
+        <p>2023(令和5)年12月10日日曜日</p>
+        <h2>数式 (SVG)</h2>
+        <p>
+            SVGの画像として数式を表示しようと思います.
+        </p>
+        <h2>ラプラシアン</h2>
+        <p>
+            <img class="svgAdaptive" src="/imgs/math/2023-12-10-1.svg" alt="nabla">
+            同士の内積を
+            <img class="svgAdaptive" src="/imgs/math/2023-12-10-3.svg" alt="laplace">
+            で表したものをラプラシアンを呼び,
+            以下のようになる.
+        </p>
+        <p>
+            <img class="svgAdaptive" src="/imgs/math/2023-12-10-2.svg" alt="laplace &= nabla dot nabla \ &= diff^2 / (diff x^2) + diff^2 / (diff y^2) + diff / (diff z^2) \ &= nabla^2">
+        </p>
+        <p>
+            SVGの方が簡単なように感じます.
+            しかし,
+            同じ内容のSVGファイルを複数含めることは効率的ではないため,
+            SVGファイルの管理については今後検討する必要があると考えています.
+        </p>
+        <div class="generalCode">
+            <code>
+                $nabla$<br><br>
+                $laplace &= nabla dot nabla \ <br>
+                &nbsp;&= diff^2 / (diff x^2) + diff^2 / (diff y^2) + diff / (diff z^2) \ <br>
+                &nbsp;&= nabla^2$ <br><br>
+                $laplace$
+            </code>
+        </div>
+
+
+        <h2>最近の改善点</h2>
+        <p>最近改善した内容は以下です.</p>
+        <ul>
+            <li>
+                <auto-link href="/tools/edit/">/tools/edit/</auto-link>
+                を幅の狭いディバイスで閲覧した場合に, コードの折り返しがされず, 横スクロールが発生する問題
+            </li>
+        </ul>
+        <h2>今後の改善予定</h2>
+        <p>
+            改善予定を以下に示します.
+        </p>
+        <ul>
+            <li>
+                数式のSVGファイルの管理方法
+            </li>
+            <li>
+                <auto-link href="/feedback/">/feedback/</auto-link>
+                を1024px以上の幅で見た場合に, 基本情報の入力欄が全て横に並ぶ問題
+            </li>
+            <li>
+                <auto-link href="/tools/edit/">/tools/edit/</auto-link>
+                を1024px以上の幅で見た場合に, 多くの空間が開く問題
+            </li>
+            <li>
+                <auto-link href="/">/</auto-link>
+                の「最近」における自動表示
+            </li>
+            <li>複数の投稿を1つのページで一括表示</li>
+        </ul>
+        <p>
+            少しずつ改善していきたいと思います.
+        </p>
+    </main>
+    <script type="application/json" id="pageInfo">
+        {
+            "createdAt": "2023-12-10T02:26:00.000Z"
+        }
+    </script>
+
+    <!-- "alwaysRefresh": true -->
+
+</body>
+
+</html>
