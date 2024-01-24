@@ -201,7 +201,7 @@ function showPath() {
         let space = document.createElement('span');
         space.innerHTML = currentSpace;
         let link = document.createElement('auto-link');
-        link.setAttribute("href", currentPath)
+        link.setAttribute("href", currentPath);
         link.textContent = currentPath;
         linkli.appendChild(space);
         linkli.appendChild(link);
@@ -315,6 +315,7 @@ class AutoLink extends HTMLElement {
         const linkElement = document.createElement('a');
         linkElement.href = this.getAttribute('href');
         linkElement.textContent = pageTitle;
+        linkElement.title = pageTitle + " (" + this.getAttribute('href') + ")";
         // 元の <auto-link> を <a> タグに置き換え
         this.replaceWith(linkElement);
         removeStateAndChange(autoLinkId, null);
