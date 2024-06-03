@@ -318,6 +318,8 @@ async function getPageTitleFromURL(url) {
 
     const csvData = await getCSVData();
 
+    console.log(csvData);
+
     if (fullUrl in csvData) {
         addState('データヒット: ' + fullUrl, 1000);
         pageTitle[fullUrl] = csvData[fullUrl];
@@ -330,7 +332,7 @@ async function getPageTitleFromURL(url) {
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             removeStateAndChange(pageGetId, { message: exURL(url) + ' の情報を取得しました', duration: 2048 });
-            pageTitle[url] = doc.title;
+            pageTitle[fullUrl] = doc.title;
             return doc.title;
         } catch (error) {
             console.error("ページの取得エラー:", error);
@@ -364,8 +366,11 @@ document.addEventListener("DOMContentLoaded", function () {
     pageInfo = JSON.parse(document.getElementById('pageInfo').textContent);
     insertScript(pageInfo);
     generateGlobalComponents();
-    customElements.define('auto-link', AutoLink);
     pastPageURL.unshift(location.href);
+
+    getCSVData();
+
+    customElements.define('auto-link', AutoLink);
 });
 
 // イベントデリゲーションを使用したクリックハンドラ
