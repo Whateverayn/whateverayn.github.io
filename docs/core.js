@@ -297,14 +297,19 @@ async function getCSVData() {
     csvDataCache = {};
     for (let i = 0; i < csvArray.length; i++) {
         let [url, title] = csvArray[i].map(item => item.replace(/^"|"$/g, ''));
-        csvDataCache[url] = title;
+        csvDataCache[normalizeUrl(url)] = title;
     }
     return csvDataCache;
 }
     
+// URLを正規化する関数
+function normalizeUrl(url) {
+    return url.replace(/\/index\.html$/, '/');
+}
+
 // ページタイトルを取得
 async function getPageTitleFromURL(url) {
-    const fullUrl = exURL(url);
+    const fullUrl = normalizeUrl(exURL(url));
 
     if (fullUrl in pageTitle) {
         addState('キャッシュヒット: ' + fullUrl, 1000);
