@@ -307,12 +307,14 @@ async function getPageTitleFromURL(url) {
     const fullUrl = exURL(url);
 
     if (fullUrl in pageTitle) {
+        addState('キャッシュヒット: ' + fullUrl, 1000);
         return pageTitle[fullUrl];
     }
 
     const csvData = await getCSVData();
 
     if (fullUrl in csvData) {
+        addState('データヒット: ' + fullUrl, 1000);
         pageTitle[fullUrl] = csvData[fullUrl];
         return csvData[fullUrl];
     } else {
