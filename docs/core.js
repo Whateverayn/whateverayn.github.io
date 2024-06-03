@@ -281,10 +281,40 @@ function exURL(url) {
     return new URL(url, location.href).href;
 }
 
+// CSVからデータを読み込む関数
+async function fetchCSV() {
+    const response = await fetch('/output.csv');
+    const data = await response.text();
+    return data.split('\n').map(row => row.split(','));
+}
+
+// CSVデータをオブジェクトに変換
+async function getCSVData() {
+    if (csvDataCache) {
+        return csvDataCache;
+    }
+    const csvArray = await fetchCSV();
+    csvDataCache = {};
+    for (let i = 0; i < csvArray.length; i++) {
+        let [url, title] = csvArray[i].map(item => item.replace(/^"|"$/g, ''));
+        csvDataCache[url] = title;
+    }
+    return csvDataCache;
+}
+    
 // ページタイトルを取得
 async function getPageTitleFromURL(url) {
-    if (url in pageTitle) {
-        return pageTitle[url];
+    const fullUrl = exURL(url);
+
+    if (fullUrl in pageTitle) {
+        return pageTitle[fullUrl];
+    }
+
+    const csvData = await getCSVData();
+
+    if (fullUrl in csvData) {
+        pageTitle[fullUrl] = csvData[fullUrl];
+        return csvData[fullUrl];
     } else {
         const pageGetId = addState(exURL(url) + ' の情報を取得しています...', 0);
         try {
@@ -364,6 +394,7 @@ window.onpopstate = (event) => {
 
 let pageInfo = {};
 let pageTitle = {};
+let csvDataCache = null;
 let jsFilesToRemove = [];
 let messageCount = 0;
 let pageCreate = '';
