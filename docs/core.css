@@ -279,6 +279,13 @@ a:active {
     max-width: 100%;
 }
 
+.svg_page{
+    text-align: center;
+}
+.svg_page > img{
+    max-width: 100%;
+}
+
 #stateInfoOut {
     background-color: var(--dialog-bg);
     backdrop-filter: saturate(180%) blur(20px);
