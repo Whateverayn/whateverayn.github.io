@@ -22,66 +22,76 @@
 <body>
     <main id="root">
         <p>2024(令和6)年6月4日火曜日</p>
-        <h2>はじめに</h2>
+        <h2>R-C直列回路の過渡現象についてのよくある計算</h2>
+        <p>PDF: 
+            <auto-link href="./2024-06-04.pdf">
+                <a href="./2024-06-04.pdf">2024-06-04.pdf</a>
+            </auto-link>
+        </p>
+        <p><a href="./2024-06-04.pdf">2024-06-04.pdf</a></p>
+        <div class="svg_page">
+            <img class="svgAdaptive" src="/imgs/math/2024-06-04.svg" alt="2024-06-04.pdfをSVGにしたもの">
+        </div>
+        <h2>お願い</h2>
         <p>
             数学は弱いので, 厳密な解き方ではない可能性があります.
             詳しい方で, 何かおかしいと感じたら,
             <auto-link href="/feedback/">/feedback/</auto-link>
             からご指摘いただけると, 場合によっては訂正させていただきます.
         </p>
-        <h2>R-C直列回路の過渡現象</h2>
-        <p>最初, コンデンサの電荷を
-            <img class="svgAdaptive" src="/imgs/math/2024-06-04.svg" alt="0">
-            とする.
-        </p>
-        <p>キルヒホッフの法則から次の式が成り立つ.</p>
-        <p><img class="svgAdaptive" src="/imgs/math/2024-06-04-1.svg" alt="V = R i + 1/C integral_0^t i d t"></p>
-
-        <p>続きはまた後日.</p>
-
 
         <div class="generalCode">
             <code>
-                $ 0 $<br><br>
-                $ V = R i + 1/C integral_0^t i d t $
-                <!-- $ laplace &= nabla dot nabla \ <br>
-                &nbsp;&= diff^2 / (diff x^2) + diff^2 / (diff y^2) + diff / (diff z^2) \ <br>
-                &nbsp;&= nabla^2 $<br><br>
-                $ laplace $ -->
+                #h(1em)<br>
+                $t=0$ において, コンデンサの電荷 $Q$ は $0$ とする.<br>
+                キルヒホッフの電圧則から, 次の式が成り立つ.<br>
+                #footnote([$Q = C V &lt;==&gt; V = Q/C$, また, $i=(d Q)/(d t)$.])<br>
+                $ V = R i+1/C integral_0^t i d t $&lt;base&gt;<br>
+                時間 $t$ で微分する.<br>
+                $k_0$ を積分定数とし, $k = e^(k_0)$ とする.<br>
+                $<br>
+                &nbsp;(d V)/(d t)&amp;=(d (R i))/(d t)+(d(1/C integral_0^t i d t))/(d t)\<br>
+                &nbsp;0&amp;=R (d)/(d t)i+1/C d(integral_0^t i d t)/(d t)\<br>
+                &nbsp;&amp;=R (d i)/(d t)+1/C i\<br>
+                &nbsp;R (d i)/(d t)&amp;=-i/C\<br>
+                &nbsp;1/i (d i)/(d t)&amp;=-1/(R C)\<br>
+                &nbsp;integral 1/i d i&amp;=integral-1/(R C) d t\<br>
+                &nbsp;ln i&amp;=-1/(R C) integral d t + k_0\<br>
+                &nbsp;&amp;=-t/(R C)+k_0\<br>
+                &nbsp;i &amp;= e^(-t/(R C)+k_0)\<br>
+                &nbsp;&amp;=e^(k_0)e^(-t/(R C))\<br>
+                &nbsp;&amp;=k e^(-t/(R C))<br>
+                $&lt;dt&gt;<br>
+                次に, $k$ の値を求める.<br>
+                @dt から,<br>
+                $<br>
+                &nbsp;i(0)&amp;=k e^(-0/(R C))\<br>
+                &nbsp;&amp;=k e^0\<br>
+                &nbsp;&amp;= k<br>
+                $&lt;eq-1&gt;<br>
+                となる.<br>
+                初期条件として, $t = 0$, $Q = 0$ であるから,<br>
+                @base は,<br>
+                $<br>
+                &nbsp;V&amp;=R i + 0/C\<br>
+                &nbsp;&amp;= R i\<br>
+                &nbsp;i&amp;=V/R<br>
+                $&lt;eq-2&gt;<br>
+                である. @eq-1 と @eq-2 から,<br>
+                $ k = V/R $<br>
+                以上より, $i(t)$ は,<br>
+                $ i(t) = underbracket(V/R, k) e^(-t/(R C)) [upright(A)] $<br>
+                である.<br>
+                時定数を $tau = R C [upright(s)]$ とすると,<br>
+                $ i(t) = V/R e^(-t/tau) [A] $<br>
+                となる.<br>
             </code>
         </div>
-
-        <!-- <h2>今後の改善予定</h2>
-        <p>
-            改善予定を以下に示します.
-        </p>
-        <ul>
-            <li>
-                数式のSVGファイルの管理方法
-            </li>
-            <li>
-                <auto-link href="/feedback/">/feedback/</auto-link>
-                を1024px以上の幅で見た場合に, 基本情報の入力欄が全て横に並ぶ問題
-            </li>
-            <li>
-                <auto-link href="/tools/edit/">/tools/edit/</auto-link>
-                を1024px以上の幅で見た場合に, 多くの空間が開く問題
-            </li>
-            <li>
-                <auto-link href="/">/</auto-link>
-                の「最近」における自動表示
-            </li>
-            <li>複数の投稿を1つのページで一括表示</li>
-        </ul>
-        <p>
-            少しずつ改善していきたいと思います.
-        </p> -->
-
     </main>
     <script type="application/json" id="pageInfo">
         {
             "createdAt": "2024-06-03T17:00:00.000Z",
-            "updatedAt": "2024-06-03T17:00:00.000Z"
+            "updatedAt": "2024-06-04T16:36:00.000Z"
         }
     </script>
 
