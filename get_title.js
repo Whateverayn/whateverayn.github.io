@@ -57,17 +57,27 @@ const dirPath = './docs';
         const title = await page.title();
         // 外部リンクを取得
         const links = await page.$$eval('a', as => as.map(a => ({ href: a.href, text: a.innerText })));
-
-        links.forEach(link => {
+        
+        for (const link of links) {
             const parsedUrl = parse(link.href);
             if (parsedUrl.host && !parsedUrl.host.includes('localhost')) {
+                let linkTitle = link.text.replace(/"/g, '""');
+                try {
+                    await page.goto(link.href);
+                    const externalTitle = await page.title();
+                    if (externalTitle && externalTitle.trim()) {
+                        linkTitle = externalTitle.replace(/"/g, '""');
+                    }
+                } catch (error) {
+                    console.error(`Failed to retrieve title for ${link.href}`);
+                }
                 hrefs.push({
                     url: link.href,
-                    title: link.text.replace(/"/g, '""')
+                    title: linkTitle
                 });
-                console.log(` ${link.href}: ${link.text}`);
+                console.log(` ${link.href}: ${linkTitle}`);
             }
-        });
+        }
 
         hrefs.push({
             url: `https://whateverayn.github.io/${filePath}`,
