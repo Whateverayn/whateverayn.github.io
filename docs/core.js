@@ -312,28 +312,36 @@ async function getPageTitleFromURL(url) {
     const fullUrl = normalizeUrl(exURL(url));
 
     if (fullUrl in pageTitle) {
-        addState('キャッシュヒット: ' + fullUrl, 1000);
+        // addState('キャッシュヒット: ' + fullUrl, 1000);
         return pageTitle[fullUrl];
     }
 
     const csvData = await getCSVData();
 
-    console.log(csvData);
-
     if (fullUrl in csvData) {
-        addState('データヒット: ' + fullUrl, 1000);
+        // addState('データヒット: ' + fullUrl, 1000);
         pageTitle[fullUrl] = csvData[fullUrl];
         return csvData[fullUrl];
     } else {
         const pageGetId = addState(exURL(url) + ' の情報を取得しています...', 0);
         try {
             const response = await fetch(url);
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            removeStateAndChange(pageGetId, { message: exURL(url) + ' の情報を取得しました', duration: 2048 });
-            pageTitle[fullUrl] = doc.title;
-            return doc.title;
+            const contentType = response.headers.get('content-type');
+
+            if (contentType && contentType.includes('text/html')) {
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                removeStateAndChange(pageGetId, { message: exURL(url) + ' の情報を取得しました', duration: 2048 });
+                pageTitle[fullUrl] = doc.title;
+                return doc.title;                
+            } else {
+                const fileName = url.split('/').pop(); // ファイル名を取得
+                removeStateAndChange(pageGetId, { message: exURL(url) + ' の情報を取得しました', duration: 2048 });
+                pageTitle[fullUrl] = fileName;
+                return fileName;
+            }
+
         } catch (error) {
             console.error("ページの取得エラー:", error);
             return 'Error';
@@ -398,7 +406,6 @@ window.onpopstate = (event) => {
         gtag('js', new Date());
         gtag('config', 'G-F3GN58W5S1');
     };
-    console.log('読み込まれています.');
     setTimeout(() => {
         addState('読み込み', 3072);
     }, 2000);
