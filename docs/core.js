@@ -83,13 +83,13 @@ function updateGlobalComponents() {
 // ページ遷移処理の関数
 function navigateTo(url) {
     document.getElementById('root').dataset.processing = 'processing';
-    const navigateToId = addState(exURL(url) + ' へ移動しています...', 0);
+    const navigateToId = addState(exAbsURL(exURL(url)) + ' へ移動しています...', 0);
     // Ajaxを使ってHTMLファイルの内容を取得
     fetch(url)
         .then(response => response.text())
         .then(html => {
             // 取得したHTMLの中から<div id="root">の中身を抽出
-            const parseId = addState(exURL(url) + 'inidex.html をパースしています...', 0);
+            const parseId = addState(exAbsURL(exURL(url)) + 'inidex.html をパースしています...', 0);
             var parser = new DOMParser();
             var newDocument = parser.parseFromString(html, "text/html");
             removeStateAndChange(parseId, null);
@@ -99,7 +99,7 @@ function navigateTo(url) {
             pageInfo = JSON.parse(newDocument.getElementById('pageInfo').textContent);
             removeStateAndChange(pageInfoUpDateId, null);
             if (pageInfo.alwaysRefresh === true) {
-                addState(exURL(url) + ' を再読み込みしています... 再読み込みされない場合はブラウザの再読み込みボタンを押してください', 0);
+                addState(exAbsURL(exURL(url)) + ' を再読み込みしています... 再読み込みされない場合はブラウザの再読み込みボタンを押してください', 0);
                 pageRefresh(url);
             } else {
                 // 現在のページの<head>の中身を新しい内容で差し替え
@@ -111,7 +111,7 @@ function navigateTo(url) {
                 document.getElementById("root").innerHTML = newRootContent;
                 removeStateAndChange(pageUpdateId, null);
                 updateGlobalComponents();
-                removeStateAndChange(navigateToId, { message: `${exURL(url)} へ移動しました`, duration: 2048 });
+                removeStateAndChange(navigateToId, { message: `${exAbsURL(exURL(url))} へ移動しました`, duration: 2048 });
                 pastPageURL.unshift(exURL(url));
             }
         })
@@ -172,21 +172,50 @@ function pageRefresh(url) {
     location.href = url;
 }
 
-// ドメイン内のリンクかどうかを判定する関数
-function isInternalLink(url) {
-    return url.startsWith(window.location.origin);
-}
-
 // クリックイベントハンドラ
-function linkClickHandler(event, url) {
-    if (isInternalLink(url)) {
-        event.preventDefault();
-        history.pushState({}, "", url);
-        navigateTo(url);
+async function linkClickHandler(event, url) {
+    event.preventDefault();
+    const fullUrl = new URL(url, location.href).href;
+
+    if (isInternalLink(fullUrl)) {
+        try {
+            const headResponse = await fetch(fullUrl, { method: 'HEAD' });
+            const contentType = headResponse.headers.get('content-type');
+            if (isHTML(contentType)) {
+                history.pushState({}, "", fullUrl);
+                navigateTo(fullUrl);
+            } else if (isPDF(contentType)) {
+                // 内部: PDF
+                alert("PDFファイルです: " + fullUrl);
+            } else {
+                // 内部: その他
+                alert(contentType + ": " + fullUrl);
+            }
+        } catch (error) {
+            addState("Error fetching the URL: " + error, 0);
+        }
     } else {
-        alert("外部サイトに移動します: " + url);
+        alert("外部サイトに移動します: " + fullUrl);
+        window.open(fullUrl, 'W', 'noreferrer=yes');
     }
 }
+
+// 自サイトか外部サイトかの判定
+function isInternalLink(url) {
+    const domain = location.origin;
+    return url.startsWith(domain);
+}
+
+// HTMLかどうかの判定
+function isHTML(contentType) {
+    return contentType.includes('text/html');
+}
+
+// PDFかどうかの判定
+function isPDF(contentType) {
+    return contentType === 'application/pdf';
+}
+
 
 function showPath() {
     let pathSegments = window.location.pathname.split('/').filter(segment => segment !== ''); // パスを / で分割して空のセグメントを削除
@@ -281,10 +310,23 @@ function exURL(url) {
     return new URL(url, location.href).href;
 }
 
+function exAbsURL(url) {
+    const absoluteUrl = new URL(url, location.href).href;
+    const domain = location.origin;
+
+    if (absoluteUrl.startsWith(domain)) {
+        return absoluteUrl.replace(domain, '');
+    }
+
+    return absoluteUrl;
+}
+
 // CSVからデータを読み込む関数
 async function fetchCSV() {
+    const getCsvId = addState('ページタイトル情報を取得しています...', 0);
     const response = await fetch('/output.csv');
     const data = await response.text();
+    removeStateAndChange(getCsvId, { message: 'ページタイトル情報を取得しました', duration: 2048 });
     return data.split('\n').map(row => row.split(','));
 }
 
@@ -301,7 +343,7 @@ async function getCSVData() {
     }
     return csvDataCache;
 }
-    
+
 // URLを正規化する関数
 function normalizeUrl(url) {
     return url.replace(/\/index\.html$/, '/');
@@ -312,34 +354,36 @@ async function getPageTitleFromURL(url) {
     const fullUrl = normalizeUrl(exURL(url));
 
     if (fullUrl in pageTitle) {
-        // addState('キャッシュヒット: ' + fullUrl, 1000);
         return pageTitle[fullUrl];
     }
 
     const csvData = await getCSVData();
 
     if (fullUrl in csvData) {
-        // addState('データヒット: ' + fullUrl, 1000);
         pageTitle[fullUrl] = csvData[fullUrl];
         return csvData[fullUrl];
     } else {
-        const pageGetId = addState(exURL(url) + ' の情報を取得しています...', 0);
+        const pageGetId = addState('Fetching: ' + exAbsURL(exURL(url)), 0);
         try {
-            const response = await fetch(url);
-            const contentType = response.headers.get('content-type');
+            const headResponse = await fetch(url, { method: 'HEAD' });
+            const contentType = headResponse.headers.get('content-type');
+            const contentLength = headResponse.headers.get('content-length');
 
             if (contentType && contentType.includes('text/html')) {
+                const response = await fetch(url);
                 const html = await response.text();
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                removeStateAndChange(pageGetId, { message: exURL(url) + ' の情報を取得しました', duration: 2048 });
+                removeStateAndChange(pageGetId, { message: 'Fetched (GET): ' + exAbsURL(exURL(url)), duration: 2048 });
                 pageTitle[fullUrl] = doc.title;
-                return doc.title;                
+                return doc.title;
             } else {
                 const fileName = url.split('/').pop(); // ファイル名を取得
-                removeStateAndChange(pageGetId, { message: exURL(url) + ' の情報を取得しました', duration: 2048 });
-                pageTitle[fullUrl] = fileName;
-                return fileName;
+                const fileSize = contentLength ? ` (${formatFileSize(contentLength)})` : '';
+                const fileInfo = `${fileName} - ${contentType}${fileSize}`;
+                removeStateAndChange(pageGetId, { message: 'Fetched (HEAD): ' + exAbsURL(exURL(url)), duration: 2048 });
+                pageTitle[fullUrl] = fileInfo;
+                return fileInfo;
             }
 
         } catch (error) {
@@ -347,6 +391,19 @@ async function getPageTitleFromURL(url) {
             return 'Error';
         }
     }
+}
+
+function formatFileSize(bytes) {
+    const units = ['B', 'KB', 'MB', 'GB', 'TB'];
+    let unitIndex = 0;
+    let size = bytes;
+
+    while (size >= 1024 && unitIndex < units.length - 1) {
+        size /= 1024;
+        unitIndex++;
+    }
+
+    return `${size.toPrecision(4)} ${units[unitIndex]}`;
 }
 
 class AutoLink extends HTMLElement {
@@ -369,14 +426,14 @@ class AutoLink extends HTMLElement {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     // 初回設定
     pageInfo = JSON.parse(document.getElementById('pageInfo').textContent);
     insertScript(pageInfo);
     generateGlobalComponents();
     pastPageURL.unshift(location.href);
 
-    getCSVData();
+    await getCSVData();
 
     customElements.define('auto-link', AutoLink);
 });
