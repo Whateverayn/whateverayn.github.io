@@ -166,6 +166,9 @@ function stateSizeOptimize() {
         }
 
     }
+    if (!checkBackdropFilter()) {
+        document.getElementById('stateInfoOut').style.backgroundColor = 'var(--dialog-bg-ios)';
+    }
 }
 
 function pageRefresh(url) {
@@ -186,18 +189,103 @@ async function linkClickHandler(event, url) {
                 navigateTo(fullUrl);
             } else if (isPDF(contentType)) {
                 // 内部: PDF
-                alert("PDFファイルです: " + fullUrl);
+                createLinkDialog(fullUrl, false, true);
             } else {
                 // 内部: その他
-                alert(contentType + ": " + fullUrl);
+                createLinkDialog(fullUrl, false, false);
             }
         } catch (error) {
             addState("Error fetching the URL: " + error, 0);
         }
     } else {
-        alert("外部サイトに移動します: " + fullUrl);
-        window.open(fullUrl, 'W', 'noreferrer=yes');
+        createLinkDialog(fullUrl, true, false)
     }
+}
+
+async function createLinkDialog(url, isExternal, isPDF) {
+    const dialogBodyElement = document.createElement('div');
+
+    const dialogTitle = document.createElement('h1');
+    dialogTitle.innerText = '' + await getPageTitleFromURL(url);
+    dialogBodyElement.appendChild(dialogTitle);
+
+    const dialogMessage = document.createElement('p');
+    dialogMessage.innerText = 'URL:\n' + url;
+    dialogBodyElement.appendChild(dialogMessage);
+
+    const dialogButtonElement = document.createElement('div');
+    dialogButtonElement.className = 'general_vertical_button';
+
+    const newTabButton = document.createElement('button');
+    newTabButton.className = 'generalButton';
+    newTabButton.innerText = 'New Tab';
+    newTabButton.onclick = () => {
+        window.open(url, 'W', 'noreferrer=yes');
+    };
+    dialogButtonElement.appendChild(newTabButton);
+
+    if (isPDF) {
+        const pdfjsButton = document.createElement('button');
+        pdfjsButton.className = 'generalButton';
+        pdfjsButton.innerText = 'PDF Viewer (PDF.js)';
+        pdfjsButton.onclick = () => {
+            navigateToPdfJs(url);
+        };
+        dialogButtonElement.appendChild(pdfjsButton);
+    }
+
+    if (!isExternal) {
+        const iframeButton = document.createElement('button');
+        iframeButton.className = 'generalButton';
+        iframeButton.innerText = 'Iframe';
+        iframeButton.onclick = async () =>{
+            openIframe(url, await getPageTitleFromURL(url));
+        }
+        dialogButtonElement.appendChild(iframeButton);
+    }
+
+    const copyButton = document.createElement('button');
+    copyButton.className = 'generalButton';
+    copyButton.innerText = 'Copy';
+    copyButton.onclick = () => {
+        copy2clipboard(url);
+    }
+    dialogButtonElement.appendChild(copyButton);
+
+    const cancelButton = document.createElement('button');
+    cancelButton.className = 'generalButton';
+    cancelButton.innerText = 'Cancel';
+    dialogButtonElement.appendChild(cancelButton);
+
+    const formDialog = document.createElement('form');
+    formDialog.appendChild(dialogBodyElement);
+    formDialog.appendChild(dialogButtonElement);
+    formDialog.method = 'dialog';
+    generalDialog('open', formDialog);
+}
+
+function generalDialog(status, element) {
+    let dialog = document.getElementById('buttonGeneralDialog');
+    if (!dialog) {
+        dialog = document.createElement('dialog');
+        dialog.id = 'buttonGeneralDialog';
+        dialog.className = 'generalDialog';
+        document.body.appendChild(dialog);
+    }
+    dialog.innerHTML = '';
+    if (status === 'open') {
+        dialog.appendChild(element);
+        dialog.showModal();
+    } else if (status === 'close') {
+        dialog.close();
+    }
+}
+
+async function navigateToPdfJs(url) {
+    // PDF.jsでURLを開く処理を書く
+    const title = await getPageTitleFromURL(url);
+    console.log(title);
+    openIframe(`/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`, title);
 }
 
 // 自サイトか外部サイトかの判定
@@ -214,6 +302,40 @@ function isHTML(contentType) {
 // PDFかどうかの判定
 function isPDF(contentType) {
     return contentType === 'application/pdf';
+}
+
+function openIframe(url, title) {
+    let iframe = document.getElementById('generalIframe');
+    if (!iframe) {
+        iframe = document.createElement('div');
+        iframe.id = 'generalIframe';
+
+        const titlebar = document.createElement('div');
+        const titleElement = document.createElement('div');
+        titleElement.innerText = title;
+        titleElement.id = 'iframeWindowTitle';
+        titlebar.appendChild(titleElement);
+
+        const closeButton = document.createElement('button');
+        closeButton.className = "generalButton";
+        closeButton.textContent = 'Close';
+        closeButton.onclick = () => {
+            iframe.dataset.view = 'HIDE';
+        }
+        titlebar.appendChild(closeButton);
+        iframe.appendChild(titlebar);
+
+        iframeElement = document.createElement('iframe');
+        iframeElement.id = 'generalIframeElement';
+        iframeElement.src = url;
+        iframe.appendChild(iframeElement);
+        iframe.dataset.view = 'SHOW';
+        document.body.appendChild(iframe);
+    }else{
+        document.getElementById('generalIframeElement').src = url;
+        document.getElementById('iframeWindowTitle').innerText = title;
+        iframe.dataset.view = 'SHOW';
+    }
 }
 
 
@@ -295,7 +417,7 @@ function copyFromInputText(id) {
 
 function copy2clipboard(text) {
     if (!navigator.clipboard) {
-        alert("お使いのブラウザは対応していません");
+        addState("お使いのブラウザは対応していません", 2048)
     } else {
         navigator.clipboard
             .writeText(text)
@@ -388,7 +510,7 @@ async function getPageTitleFromURL(url) {
 
         } catch (error) {
             console.error("ページの取得エラー:", error);
-            return 'Error';
+            return fullUrl;
         }
     }
 }
@@ -434,9 +556,29 @@ document.addEventListener("DOMContentLoaded", async function () {
     pastPageURL.unshift(location.href);
 
     await getCSVData();
-
     customElements.define('auto-link', AutoLink);
+
+    if (!checkBackdropFilter()) {
+        addState('お使いのブラウザは CSS Backdrop Filter に対応していません.', 10240);
+    }
+    checkWordBreak(true);
 });
+
+function checkBackdropFilter() {
+    const css = CSS.supports("backdrop-filter: blur(20px)");
+    return css;
+}
+
+function checkWordBreak(params) {
+    if (CSS.supports("word-break: auto-phrase")) {
+        return true;
+    }else{
+        if (params) {
+            addState('お使いのブラウザは CSS property: word-break: auto-phrase に対応していません.', 10240);
+        }
+        return false;
+    }
+}
 
 // イベントデリゲーションを使用したクリックハンドラ
 document.body.addEventListener('click', function (event) {
@@ -463,6 +605,7 @@ window.onpopstate = (event) => {
         gtag('js', new Date());
         gtag('config', 'G-F3GN58W5S1');
     };
+
     setTimeout(() => {
         addState('読み込み', 3072);
     }, 2000);
