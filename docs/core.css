@@ -6,6 +6,7 @@
     --body-bg: #f9f9f9;
     --body-color: #1b1a1a;
     --dialog-bg: rgba(200, 200, 200, 0.3);
+    --dialog-bg-ios: rgba(240, 240, 240, 0.9);
     --input-bg: #fbfbfb;
     --input-bg-hover: #f6f6f6;
     --input-bg-focus: #ffffff;
@@ -39,6 +40,7 @@
         --body-bg: #000000;
         --body-color: #e0e0e0;
         --dialog-bg: rgba(107, 107, 107, 0.3);
+        --dialog-bg-ios: rgba(54, 54, 54, 0.9);
         --input-bg: #2d2d2d;
         --input-bg-hover: #323232;
         --input-bg-focus: #1f1f1f;
@@ -86,6 +88,7 @@ body {
     width: 100%;
     box-sizing: border-box;
     display: grid;
+    -webkit-text-size-adjust: none;
 }
 
 header {
@@ -104,6 +107,8 @@ nav {
 #headerTitle h1 {
     margin: 0;
     transition: all 0.3s;
+    text-align: center;
+    word-break: auto-phrase;
 }
 
 #headerTitle[data-processing="true"] h1 {
@@ -242,6 +247,7 @@ a:active {
     background: none;
     outline: none;
     margin: 0;
+    color: inherit;
     background-color: var(--button-bg);
     font-family: var(--general-fonts);
     font-size: 100%;
@@ -279,16 +285,18 @@ a:active {
     max-width: 100%;
 }
 
-.svg_page{
+.svg_page {
     text-align: center;
 }
-.svg_page > img{
+
+.svg_page>img {
     max-width: 100%;
 }
 
 #stateInfoOut {
     background-color: var(--dialog-bg);
     backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     position: sticky;
     box-sizing: border-box;
     bottom: 12px;
@@ -369,6 +377,84 @@ nav>ul>li>a:focus {
 
 .general_table>table {
     white-space: nowrap;
+    -webkit-text-size-adjust: none;
+}
+
+.general_vertical_button {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.generalDialog {
+    border: 1.5px solid var(--button-border);
+    border-top-color: var(--button-border-top);
+    border-bottom-color: var(--button-border-bottom);
+    border-radius: 4px;
+    background-color: var(--body-bg);
+    transition: all 0.3s;
+    box-sizing: border-box;
+    max-width: calc(100dvw - 12px);
+    max-height: calc(100dvh - 12px);
+    min-width: 120px;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+}
+
+.generalDialog::backdrop {
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    transition: all 0.3s;
+}
+
+.generalDialog h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.5em;
+}
+
+.generalDialog p{
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+#generalIframe[data-view="SHOW"]{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 2px 0;
+    display: flex;
+    gap: 2px;
+    flex-direction: column;
+    background-color: var(--body-bg);
+    box-sizing: border-box;
+}
+#generalIframe[data-view="SHOW"]>:first-child{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#generalIframe[data-view="SHOW"]>:first-child>:first-child{
+    flex: 1;
+    box-sizing: border-box;
+    display: grid;
+    place-items: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+#generalIframe[data-view="SHOW"]>#generalIframeElement{
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+}
+
+#generalIframe[data-view="HIDE"] {
+    display: none;
 }
 
 
