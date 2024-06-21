@@ -73,7 +73,7 @@ const dirPath = './docs';
                 try {
                     await page.goto(link.href);
                     const externalTitle = await page.title();
-                    linkContentType = linkResponse.headers()['content-type'];
+                    linkContentType = response.headers()['content-type'];
                     if (externalTitle && externalTitle.trim()) {
                         linkTitle = externalTitle.replace(/"/g, '""');
                     }
