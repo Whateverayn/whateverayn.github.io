@@ -176,37 +176,34 @@ function pageRefresh(url) {
 }
 
 // クリックイベントハンドラ
-async function linkClickHandler(event, url) {
-    event.preventDefault();
+function linkClickHandler(event, url, contentType) {
     const fullUrl = new URL(url, location.href).href;
 
     if (isInternalLink(fullUrl)) {
-        try {
-            const headResponse = await fetch(fullUrl, { method: 'HEAD' });
-            const contentType = headResponse.headers.get('content-type');
-            if (isHTML(contentType)) {
-                history.pushState({}, "", fullUrl);
-                navigateTo(fullUrl);
-            } else if (isPDF(contentType)) {
-                // 内部: PDF
-                createLinkDialog(fullUrl, false, true);
-            } else {
-                // 内部: その他
-                createLinkDialog(fullUrl, false, false);
-            }
-        } catch (error) {
-            addState("Error fetching the URL: " + error, 0);
+        if (isHTML(contentType)) {
+            history.pushState({}, "", fullUrl);
+            navigateTo(fullUrl);
+        } else if (isPDF(contentType)) {
+            // 内部: PDF
+            createLinkDialog(fullUrl, false, true);
+        } else {
+            // 内部: その他
+            createLinkDialog(fullUrl, false, false);
         }
     } else {
-        createLinkDialog(fullUrl, true, false)
+        createLinkDialog(fullUrl, true, false);
     }
 }
 
 async function createLinkDialog(url, isExternal, isPDF) {
+    document.getElementById('root').dataset.processing = 'false';
+    let movX = mousePoint.x - (window.innerWidth/2);
+    let movY = mousePoint.y - (window.innerHeight/2);
+    let movSet = `translateX(${movX}px) translateY(${movY}px) scale(0%)`;
+    document.documentElement.style.setProperty('--dialog-x', movSet);
     const dialogBodyElement = document.createElement('div');
-
     const dialogTitle = document.createElement('h1');
-    dialogTitle.innerText = '' + await getPageTitleFromURL(url);
+    dialogTitle.innerText = '' + (await getPageTitleFromURL(url)).title;
     dialogBodyElement.appendChild(dialogTitle);
 
     const dialogMessage = document.createElement('p');
@@ -239,7 +236,7 @@ async function createLinkDialog(url, isExternal, isPDF) {
         iframeButton.className = 'generalButton';
         iframeButton.innerText = 'Iframe';
         iframeButton.onclick = async () =>{
-            openIframe(url, await getPageTitleFromURL(url));
+            openIframe(url, (await getPageTitleFromURL(url)).title);
         }
         dialogButtonElement.appendChild(iframeButton);
     }
@@ -283,9 +280,9 @@ function generalDialog(status, element) {
 
 async function navigateToPdfJs(url) {
     // PDF.jsでURLを開く処理を書く
-    const title = await getPageTitleFromURL(url);
-    console.log(title);
-    openIframe(`/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`, title);
+    const title = (await getPageTitleFromURL(url)).title;
+    // openIframe(`/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`, title);
+    window.open(`/pdfjs/web/viewer.html?file=${encodeURIComponent(url)}`, 'W', 'noreferrer=yes');
 }
 
 // 自サイトか外部サイトかの判定
@@ -460,8 +457,12 @@ async function getCSVData() {
     const csvArray = await fetchCSV();
     csvDataCache = {};
     for (let i = 0; i < csvArray.length; i++) {
-        let [url, title] = csvArray[i].map(item => item.replace(/^"|"$/g, ''));
-        csvDataCache[normalizeUrl(url)] = title;
+        let [url, title, contentType] = csvArray[i].map(item => item.replace(/^"|"$/g, ''));
+        const normalizedUrl = normalizeUrl(url);
+        csvDataCache[normalizedUrl] = {
+            title: title,
+            contentType: contentType || 'unknown/fetchCSV' // デフォルトのコンテンツタイプを指定
+        };
     }
     return csvDataCache;
 }
@@ -476,14 +477,15 @@ async function getPageTitleFromURL(url) {
     const fullUrl = normalizeUrl(exURL(url));
 
     if (fullUrl in pageTitle) {
-        return pageTitle[fullUrl];
+        return { title: pageTitle[fullUrl], contentType: pageContentTypes[fullUrl] };
     }
 
     const csvData = await getCSVData();
 
     if (fullUrl in csvData) {
-        pageTitle[fullUrl] = csvData[fullUrl];
-        return csvData[fullUrl];
+        pageTitle[fullUrl] = csvData[fullUrl].title;
+        pageContentTypes[fullUrl] = csvData[fullUrl].contentType;
+        return { title: csvData[fullUrl].title, contentType: csvData[fullUrl].contentType };
     } else {
         const pageGetId = addState('Fetching: ' + exAbsURL(exURL(url)), 0);
         try {
@@ -498,19 +500,21 @@ async function getPageTitleFromURL(url) {
                 const doc = parser.parseFromString(html, 'text/html');
                 removeStateAndChange(pageGetId, { message: 'Fetched (GET): ' + exAbsURL(exURL(url)), duration: 2048 });
                 pageTitle[fullUrl] = doc.title;
-                return doc.title;
+                pageContentTypes[fullUrl] = contentType;
+                return { title: doc.title, contentType: contentType };
             } else {
                 const fileName = url.split('/').pop(); // ファイル名を取得
                 const fileSize = contentLength ? ` (${formatFileSize(contentLength)})` : '';
                 const fileInfo = `${fileName} - ${contentType}${fileSize}`;
                 removeStateAndChange(pageGetId, { message: 'Fetched (HEAD): ' + exAbsURL(exURL(url)), duration: 2048 });
                 pageTitle[fullUrl] = fileInfo;
-                return fileInfo;
+                pageContentTypes[fullUrl] = contentType;
+                return { title: fileInfo, contentType: contentType };
             }
 
         } catch (error) {
             console.error("ページの取得エラー:", error);
-            return fullUrl;
+            return { title: fullUrl, contentType: 'unknown' };
         }
     }
 }
@@ -536,12 +540,13 @@ class AutoLink extends HTMLElement {
     async connectedCallback() {
         // 非同期でページタイトルを取得
         const autoLinkId = addState(this.getAttribute('href') + ' を広げています...', 0);
-        const pageTitle = await getPageTitleFromURL(this.getAttribute('href'));
+        const { title: pageTitle, contentType } = await getPageTitleFromURL(this.getAttribute('href'));
         // <a> タグに直接置き換え
         const linkElement = document.createElement('a');
         linkElement.href = this.getAttribute('href');
         linkElement.textContent = pageTitle;
         linkElement.title = pageTitle + " (" + this.getAttribute('href') + ")";
+        linkElement.dataset.contentType = contentType;
         // 元の <auto-link> を <a> タグに置き換え
         this.replaceWith(linkElement);
         removeStateAndChange(autoLinkId, null);
@@ -582,12 +587,37 @@ function checkWordBreak(params) {
 
 // イベントデリゲーションを使用したクリックハンドラ
 document.body.addEventListener('click', function (event) {
+    mouseClick(event);
     // クリックが <a> 要素内で発生したかを確認
     const linkElement = event.target.closest('a');
     if (linkElement) {
-        linkClickHandler(event, linkElement.href);
+        document.getElementById('root').dataset.processing = 'processing';
+        event.preventDefault();
+        let contentType = linkElement.dataset.contentType;
+        if (contentType) {
+            linkClickHandler(event, linkElement.href, contentType);
+        }else{
+            asyncLink(event, linkElement.href);
+        }
     }
+
 });
+
+function mouseClick(event) {
+    mousePoint.x = event.clientX;
+    mousePoint.y = event.clientY;
+}
+
+async function asyncLink(event, url) {
+    const contentType = await fetchContentType(url);
+    linkClickHandler(event, url, contentType);
+}
+
+async function fetchContentType(url) {
+    const fullUrl = new URL(url, location.href).href;
+    const { contentType } = await getPageTitleFromURL(fullUrl);
+    return contentType;
+}
 
 window.onpopstate = (event) => {
     navigateTo(document.location);
@@ -613,9 +643,11 @@ window.onpopstate = (event) => {
 
 let pageInfo = {};
 let pageTitle = {};
+const pageContentTypes = {};
 let csvDataCache = null;
 let jsFilesToRemove = [];
 let messageCount = 0;
 let pageCreate = '';
 let pastPageURL = [];
+let mousePoint = {x: 0, y: 0};
 const fadeID = ['root', 'headerTitle', 'pageInfoDescription', 'pageUpdateInfo'];
