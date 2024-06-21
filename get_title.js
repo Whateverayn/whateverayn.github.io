@@ -5,7 +5,6 @@ import path from "path";
 import { exec } from "child_process";
 import { parse } from 'url';
 import csvWriter from 'csv-writer';
-import { timeEnd } from "console";
 
 const dirPath = './docs';
 
@@ -51,20 +50,30 @@ const dirPath = './docs';
         count++;
         spinner.text = `${count}`;
         const filePath = file.dir.replace("docs\\", '').replace(/\\/g, '/');
-        await page.goto(`http://localhost:3000/${filePath}`);
+        const response = await page.goto(`http://localhost:3000/${filePath}`);
+
+        // ページのコンテンツタイプを取得
+        let contentType = response.headers()['content-type'];
+        if (contentType) {
+            contentType = contentType.split(';')[0].trim();
+        } else {
+            contentType = 'unknown';
+        }
 
         // ページタイトルを取得
         const title = await page.title();
         // 外部リンクを取得
         const links = await page.$$eval('a', as => as.map(a => ({ href: a.href, text: a.innerText })));
-        
+
         for (const link of links) {
             const parsedUrl = parse(link.href);
             if (parsedUrl.host && !parsedUrl.host.includes('localhost')) {
                 let linkTitle = link.text.replace(/"/g, '""');
+                let linkContentType = 'unknown';
                 try {
                     await page.goto(link.href);
                     const externalTitle = await page.title();
+                    linkContentType = linkResponse.headers()['content-type'];
                     if (externalTitle && externalTitle.trim()) {
                         linkTitle = externalTitle.replace(/"/g, '""');
                     }
@@ -73,17 +82,19 @@ const dirPath = './docs';
                 }
                 hrefs.push({
                     url: link.href,
-                    title: linkTitle
+                    title: linkTitle,
+                    contentType: linkContentType
                 });
-                console.log(` ${link.href}: ${linkTitle}`);
+                console.log(`  ${link.href}: ${linkTitle} (${linkContentType})`);
             }
         }
 
         hrefs.push({
             url: `https://whateverayn.github.io/${filePath}`,
-            title: title.replace(/"/g, '""')
-        }); 
-        console.log(` ${filePath}: ${title}`);
+            title: title.replace(/"/g, '""'),
+            contentType: contentType
+        });
+        console.log(` ${filePath}: ${title} (${contentType})`);
 
     }
 
@@ -95,11 +106,11 @@ const dirPath = './docs';
 
     spinner.succeed('完了');
 
-     // 重複を削除
-     const uniqueHrefs = Array.from(new Set(hrefs.map(href => href.url)))
-     .map(url => {
-         return hrefs.find(href => href.url === url);
-     });
+    // 重複を削除
+    const uniqueHrefs = Array.from(new Set(hrefs.map(href => href.url)))
+        .map(url => {
+            return hrefs.find(href => href.url === url);
+        });
 
     // 名前順にソート
     uniqueHrefs.sort((a, b) => a.title.localeCompare(b.title));
@@ -109,7 +120,8 @@ const dirPath = './docs';
         path: './docs/output.csv',
         header: [
             { id: 'url', title: 'URL' },
-            { id: 'title', title: 'タイトル' }
+            { id: 'title', title: 'タイトル' },
+            { id: 'contentType', title: 'コンテンツタイプ' }
         ],
         alwaysQuote: true
     });

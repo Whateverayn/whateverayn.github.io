@@ -3,6 +3,7 @@
         'ヒラギノ角ゴ ProN',
         'Yu Gothic UI',
         system-ui;
+    --dialog-x: scale(0%);
     --body-bg: #f9f9f9;
     --body-color: #1b1a1a;
     --dialog-bg: rgba(200, 200, 200, 0.3);
@@ -399,12 +400,26 @@ nav>ul>li>a:focus {
     min-width: 120px;
     overflow-x: hidden;
     overflow-wrap: break-word;
+    animation: dialogFade 0.3s;
+}
+
+@keyframes dialogFade {
+    0% {
+        transform: var(--dialog-x);
+        transform-origin: center;
+    }
 }
 
 .generalDialog::backdrop {
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    transition: all 0.3s;
+    animation: backdropFade 0.3s;
+    background-color: var(--body-bg);
+    opacity: 0.75;
+}
+
+@keyframes backdropFade {
+    0% {
+        opacity: 0;
+    }
 }
 
 .generalDialog h1 {
@@ -413,12 +428,12 @@ nav>ul>li>a:focus {
     font-size: 1.5em;
 }
 
-.generalDialog p{
+.generalDialog p {
     margin-top: 4px;
     margin-bottom: 4px;
 }
 
-#generalIframe[data-view="SHOW"]{
+#generalIframe[data-view="SHOW"] {
     position: fixed;
     top: 0;
     left: 0;
@@ -431,13 +446,15 @@ nav>ul>li>a:focus {
     background-color: var(--body-bg);
     box-sizing: border-box;
 }
-#generalIframe[data-view="SHOW"]>:first-child{
+
+#generalIframe[data-view="SHOW"]>:first-child {
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-#generalIframe[data-view="SHOW"]>:first-child>:first-child{
+
+#generalIframe[data-view="SHOW"]>:first-child>:first-child {
     flex: 1;
     box-sizing: border-box;
     display: grid;
@@ -446,7 +463,8 @@ nav>ul>li>a:focus {
     overflow: hidden;
     white-space: nowrap;
 }
-#generalIframe[data-view="SHOW"]>#generalIframeElement{
+
+#generalIframe[data-view="SHOW"]>#generalIframeElement {
     height: 100%;
     width: 100%;
     box-sizing: border-box;
