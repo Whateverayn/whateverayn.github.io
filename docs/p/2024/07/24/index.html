@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: https://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マクスウェル方程式</title>
+    <meta property="og:title" content="マクスウェル方程式" />
+    <meta name="description" content="試験前に作ったものです.">
+    <meta property="og:description" content="試験前に作ったものです." />
+    <meta property="og:site_name" content="Whateverayn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
+    <meta name="twitter:card" content="Summary Card" />
+    <meta name="theme-color" content="#363663">
+    <link rel="icon" href="/icons/icon-2.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="stylesheet" href="/core.css">
+    <script defer="defer" src="/core.js"></script>
+</head>
+
+<body>
+    <main id="root">
+        <p>2024(令和6)年7月24日水曜日</p>
+        <h2>マクスウェル方程式 など</h2>
+        <p>PDF:
+            <auto-link href="./2024-07-24.pdf">
+                <a href="./2024-07-24.pdf">PDF</a>
+            </auto-link>
+        </p>
+        <div class="svg_page">
+            <img class="svgAdaptive" src="/imgs/math/2024-07-24.svg" alt="2024-07-24.pdfをSVGにしたもの">
+        </div>
+        <p>
+            <auto-link href="/feedback/">/feedback/</auto-link>
+        </p>
+
+        <div class="generalCode">
+            <code>
+                =&nbsp;マクスウェル方程式<br>
+                <br>
+                ==&nbsp;電場のガウスの法則<br>
+                <br>
+                -&nbsp;電束密度の発散は電荷密度.<br>
+                -&nbsp;電荷があれば,&nbsp;電場が発散.<br>
+                -&nbsp;$bold(D)$&nbsp;は電束密度,&nbsp;$rho$&nbsp;は電荷密度である.<br>
+                <br>
+                $<br>
+                &nbsp;&nbsp;integral_S&nbsp;bold(D)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;&amp;=&nbsp;integral_V&nbsp;rho&nbsp;d&nbsp;V\<br>
+                &nbsp;&nbsp;integral_V&nbsp;nabla&nbsp;dot&nbsp;bold(D)&nbsp;d&nbsp;V&nbsp;&amp;=&nbsp;integral_V&nbsp;rho&nbsp;d&nbsp;V\<br>
+                &nbsp;&nbsp;integral_V&nbsp;(nabla&nbsp;dot&nbsp;bold(D)&nbsp;-&nbsp;rho)&nbsp;d&nbsp;V&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;nabla&nbsp;dot&nbsp;bold(D)&nbsp;-&nbsp;rho&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;nabla&nbsp;dot&nbsp;bold(D)&nbsp;&amp;=&nbsp;rho\<br>
+                &nbsp;&nbsp;"div"&nbsp;bold(D)&nbsp;&amp;=&nbsp;rho<br>
+                $<br>
+                <br>
+                ==&nbsp;磁場のガウスの法則<br>
+                <br>
+                -&nbsp;磁束密度の発散は&nbsp;$0$.<br>
+                -&nbsp;磁場は発散しない.<br>
+                -&nbsp;$bold(B)$&nbsp;は磁束密度である.<br>
+                <br>
+                $<br>
+                &nbsp;&nbsp;integral_S&nbsp;bold(B)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;integral_V&nbsp;nabla&nbsp;dot&nbsp;bold(B)&nbsp;d&nbsp;V&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;nabla&nbsp;dot&nbsp;bold(B)&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;"div"&nbsp;bold(B)&nbsp;&amp;=&nbsp;0\<br>
+                $<br>
+                <br>
+                ==&nbsp;ファラデー・マクスウェルの法則<br>
+                <br>
+                -&nbsp;電場の回転は,&nbsp;磁束を妨げる方向に磁束密度の時間変化分となる.<br>
+                -&nbsp;$bold(E)$&nbsp;は&nbsp;電場,&nbsp;$bold(B)$&nbsp;は磁束密度である.<br>
+                <br>
+                $<br>
+                &nbsp;&nbsp;integral.cont_C&nbsp;bold(E)&nbsp;dot&nbsp;d&nbsp;bold(r)&nbsp;&amp;=&nbsp;-&nbsp;integral_S&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S\<br>
+                &nbsp;&nbsp;integral_S&nbsp;(nabla&nbsp;times&nbsp;bold(E))&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;&amp;=&nbsp;-&nbsp;integral_S&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S\<br>
+                &nbsp;&nbsp;integral_S&nbsp;(nabla&nbsp;times&nbsp;bold(E)&nbsp;+&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t))&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;nabla&nbsp;times&nbsp;bold(E)&nbsp;+&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;nabla&nbsp;times&nbsp;bold(E)&nbsp;&amp;=&nbsp;-&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t)\<br>
+                &nbsp;&nbsp;"rot"&nbsp;bold(E)&nbsp;&amp;=&nbsp;-&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t)<br>
+                $<br>
+                <br>
+                ==&nbsp;アンペール・マクスウェルの法則<br>
+                <br>
+                -&nbsp;磁場の回転は,&nbsp;$"電流密度"&nbsp;+&nbsp;"電束密度"bold(D)"の時間変化分"$&nbsp;となる.<br>
+                -&nbsp;$bold(H)$&nbsp;は&nbsp;磁場,&nbsp;$bold(J)$&nbsp;は電流密度,&nbsp;$bold(D)$&nbsp;は電束密度である.<br>
+                <br>
+                $<br>
+                &nbsp;&nbsp;integral.cont_C&nbsp;bold(H)&nbsp;dot&nbsp;d&nbsp;bold(r)&nbsp;&amp;=&nbsp;underbracket(integral_S&nbsp;bold(J)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S,&nbsp;I)&nbsp;+&nbsp;integral_S&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S\<br>
+                &nbsp;&nbsp;integral_S&nbsp;(nabla&nbsp;times&nbsp;bold(H))&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;&amp;=&nbsp;integral_S&nbsp;bold(J)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;+&nbsp;integral_S&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S\<br>
+                &nbsp;&nbsp;integral_S&nbsp;(nabla&nbsp;times&nbsp;bold(H)&nbsp;-&nbsp;bold(J)&nbsp;-&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t))&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;nabla&nbsp;times&nbsp;bold(H)&nbsp;-&nbsp;bold(J)&nbsp;-&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;nabla&nbsp;times&nbsp;bold(H)&nbsp;&amp;=&nbsp;bold(J)&nbsp;+&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t)\<br>
+                &nbsp;&nbsp;"rot"&nbsp;bold(H)&nbsp;&amp;=&nbsp;bold(J)&nbsp;+&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t)<br>
+                $<br>
+                <br>
+                ==&nbsp;$bold(D)$,&nbsp;$bold(H)$,&nbsp;$E$,&nbsp;$bold(M)$,&nbsp;$bold(B)$<br>
+                <br>
+                $&nbsp;bold(D)&nbsp;=&nbsp;epsilon_0&nbsp;bold(E)&nbsp;+&nbsp;underbracket(bold(P),&nbsp;"分極ベクトル")&nbsp;$<br>
+                $&nbsp;bold(H)&nbsp;=&nbsp;1&nbsp;/&nbsp;mu_0&nbsp;bold(B)&nbsp;-&nbsp;underbracket(bold(M),&nbsp;"磁化ベクトル")&nbsp;$<br>
+                $&nbsp;bold(M)&nbsp;=&nbsp;underbracket(chi_m,&nbsp;"磁化率")&nbsp;bold(H)&nbsp;$<br>
+                $&nbsp;bold(B)&nbsp;=&nbsp;mu_0&nbsp;underbracket(mu_r,&nbsp;1&nbsp;+&nbsp;chi_m&nbsp;"(比透磁率)")&nbsp;bold(H)&nbsp;$<br>
+                $&nbsp;E&nbsp;=&nbsp;V&nbsp;/&nbsp;d&nbsp;$<br>
+                $&nbsp;bold(B)&nbsp;=&nbsp;nabla&nbsp;times&nbsp;bold(A)&nbsp;$<br>
+                $&nbsp;"grad"&nbsp;A&nbsp;=&nbsp;nabla&nbsp;A&nbsp;=&nbsp;((partial&nbsp;A)&nbsp;/&nbsp;(partial&nbsp;x),&nbsp;(partial&nbsp;A)&nbsp;/&nbsp;(partial&nbsp;y),&nbsp;(partial&nbsp;A)&nbsp;/&nbsp;(partial&nbsp;z))&nbsp;=&nbsp;bold(B)&nbsp;$<br>
+                $&nbsp;"div"&nbsp;bold(A)&nbsp;=&nbsp;nabla&nbsp;dot&nbsp;bold(A)&nbsp;=&nbsp;(partial&nbsp;A_x)&nbsp;/&nbsp;(partial&nbsp;x)&nbsp;+&nbsp;(partial&nbsp;A_y)&nbsp;/&nbsp;(partial&nbsp;y)&nbsp;+&nbsp;(partial&nbsp;A_z)&nbsp;/&nbsp;(partial&nbsp;z)&nbsp;=&nbsp;C&nbsp;$<br>
+                <br>
+                =&nbsp;ローレンツ力<br>
+                <br>
+                $&nbsp;bold(F)&nbsp;=&nbsp;q&nbsp;bold(E)&nbsp;+&nbsp;q&nbsp;bold(v)&nbsp;times&nbsp;bold(B)&nbsp;$<br>
+                <br>
+                =&nbsp;電荷保存則&nbsp;(連続の式)<br>
+                <br>
+                $&nbsp;<br>
+                &nbsp;&nbsp;-&nbsp;d&nbsp;/&nbsp;(d&nbsp;t)&nbsp;integral_V&nbsp;rho&nbsp;d&nbsp;V&nbsp;&amp;=&nbsp;integral_S&nbsp;bold(J)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S\<br>
+                &nbsp;&nbsp;(partial&nbsp;rho)&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;+&nbsp;nabla&nbsp;dot&nbsp;bold(J)&nbsp;&amp;=&nbsp;0&nbsp;<br>
+                $<br>
+                <br>
+                =&nbsp;ガウスの発散定理とストークスの定理<br>
+                <br>
+                $&nbsp;integral_S&nbsp;bold(D)&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;=&nbsp;integral_V&nbsp;nabla&nbsp;dot&nbsp;bold(D)&nbsp;d&nbsp;V&nbsp;$<br>
+                $&nbsp;integral.cont_C&nbsp;bold(E)&nbsp;dot&nbsp;d&nbsp;bold(r)&nbsp;=&nbsp;integral_S&nbsp;(nabla&nbsp;times&nbsp;bold(E))&nbsp;dot&nbsp;bold(n)&nbsp;d&nbsp;S&nbsp;$<br>
+                <br>
+                =&nbsp;電気素量<br>
+                <br>
+                $&nbsp;e&nbsp;=&nbsp;1.60217663&nbsp;×&nbsp;10^(-19)&nbsp;upright(C)&nbsp;$<br>
+                <br>
+                =&nbsp;電磁場のエネルギー保存則<br>
+                <br>
+                -&nbsp;エネルギー密度の時間変化と,&nbsp;電磁場のエネルギー&nbsp;($bold(S)$)の発散&nbsp;の和が&nbsp;$0$,&nbsp;つまり一定に保たれる.<br>
+                <br>
+                $&nbsp;<br>
+                &nbsp;&nbsp;nabla&nbsp;times&nbsp;bold(H)&nbsp;-&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;&amp;=&nbsp;bold(J)\<br>
+                &nbsp;&nbsp;bold(E)&nbsp;dot&nbsp;(nabla&nbsp;times&nbsp;bold(H)&nbsp;-&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t))&nbsp;&amp;=&nbsp;bold(E)&nbsp;dot&nbsp;bold(J)<br>
+                $<br>
+                $<br>
+                &nbsp;&nbsp;nabla&nbsp;times&nbsp;bold(E)&nbsp;+&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;bold(H)&nbsp;dot&nbsp;(nabla&nbsp;times&nbsp;bold(E)&nbsp;+&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t))&nbsp;&amp;=&nbsp;0<br>
+                $<br>
+                $<br>
+                &nbsp;&nbsp;bold(H)&nbsp;dot&nbsp;(nabla&nbsp;times&nbsp;bold(E)&nbsp;+&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t))&nbsp;-&nbsp;bold(E)&nbsp;dot&nbsp;(nabla&nbsp;times&nbsp;bold(H)&nbsp;-&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t))&nbsp;&amp;=&nbsp;-&nbsp;bold(E)&nbsp;dot&nbsp;bold(J)\<br>
+                &nbsp;&nbsp;bold(H)&nbsp;dot&nbsp;(nabla&nbsp;times&nbsp;bold(E))&nbsp;-&nbsp;bold(E)&nbsp;dot&nbsp;(nabla&nbsp;times&nbsp;bold(H))&nbsp;+&nbsp;bold(H)&nbsp;dot&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;+&nbsp;bold(E)&nbsp;dot&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;&amp;=&nbsp;-&nbsp;bold(E)&nbsp;dot&nbsp;bold(J)<br>
+                $<br>
+                $<br>
+                &nbsp;&nbsp;nabla&nbsp;dot&nbsp;(bold(E)&nbsp;times&nbsp;bold(H))&nbsp;=&nbsp;bold(H)&nbsp;dot&nbsp;(nabla&nbsp;times&nbsp;bold(E))&nbsp;-&nbsp;bold(E)&nbsp;dot&nbsp;(nabla&nbsp;times&nbsp;bold(H))<br>
+                $<br>
+                $&nbsp;<br>
+                &nbsp;&nbsp;(partial&nbsp;bold(E)^2)&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;&amp;=&nbsp;(partial&nbsp;bold(E)&nbsp;dot&nbsp;bold(E))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;=&nbsp;(partial&nbsp;bold(E))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;dot&nbsp;bold(E)&nbsp;+&nbsp;bold(E)&nbsp;dot&nbsp;(partial&nbsp;bold(E))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;=&nbsp;2&nbsp;bold(E)&nbsp;dot&nbsp;(partial&nbsp;bold(E))&nbsp;/&nbsp;(partial&nbsp;t)\<br>
+                &nbsp;&nbsp;1&nbsp;/&nbsp;2&nbsp;(partial&nbsp;bold(E)^2)&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;&amp;=&nbsp;bold(E)&nbsp;dot&nbsp;(partial&nbsp;bold(E))&nbsp;/&nbsp;(partial&nbsp;t)<br>
+                $<br>
+                $&nbsp;<br>
+                &nbsp;&nbsp;bold(H)&nbsp;dot&nbsp;(partial&nbsp;bold(B))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;+&nbsp;bold(E)&nbsp;dot&nbsp;(partial&nbsp;bold(D))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;&amp;=&nbsp;epsilon_0&nbsp;bold(E)&nbsp;dot&nbsp;(partial&nbsp;bold(E))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;+&nbsp;mu_0&nbsp;bold(H)&nbsp;dot&nbsp;(partial&nbsp;bold(H))&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;=&nbsp;epsilon_0&nbsp;/&nbsp;2&nbsp;(partial&nbsp;bold(E)^2)&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;+&nbsp;mu_0&nbsp;/&nbsp;2&nbsp;(partial&nbsp;bold(H)^2)&nbsp;/&nbsp;(partial&nbsp;t)\<br>
+                &nbsp;&nbsp;&amp;=&nbsp;partial&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;(1&nbsp;/&nbsp;2&nbsp;epsilon_0&nbsp;bold(E)^2&nbsp;+&nbsp;1&nbsp;/&nbsp;2&nbsp;mu_0&nbsp;bold(H)^2)&nbsp;=&nbsp;partial&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;(1&nbsp;/&nbsp;2&nbsp;bold(E)&nbsp;dot&nbsp;bold(D)&nbsp;+&nbsp;1&nbsp;/&nbsp;2&nbsp;bold(B)&nbsp;dot&nbsp;bold(H))&nbsp;<br>
+                $<br>
+                $<br>
+                &nbsp;&nbsp;nabla&nbsp;dot&nbsp;(bold(E)&nbsp;times&nbsp;bold(H))&nbsp;+&nbsp;partial&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;(1&nbsp;/&nbsp;2&nbsp;bold(E)&nbsp;dot&nbsp;bold(D)&nbsp;+&nbsp;1&nbsp;/&nbsp;2&nbsp;bold(B)&nbsp;dot&nbsp;bold(H))&nbsp;&amp;=&nbsp;-&nbsp;bold(E)&nbsp;dot&nbsp;bold(J)\<br>
+                &nbsp;&nbsp;underbracket((partial&nbsp;u)&nbsp;/&nbsp;(partial&nbsp;t),&nbsp;partial&nbsp;/&nbsp;(partial&nbsp;t)&nbsp;(1&nbsp;/&nbsp;2&nbsp;bold(E)&nbsp;dot&nbsp;bold(D)&nbsp;+&nbsp;1&nbsp;/&nbsp;2&nbsp;bold(B)&nbsp;dot&nbsp;bold(H)))&nbsp;+&nbsp;nabla&nbsp;dot&nbsp;underbracket(bold(S),&nbsp;bold(E)&nbsp;times&nbsp;bold(H))&nbsp;=&nbsp;underbracket(0,&nbsp;-&nbsp;bold(E)&nbsp;dot&nbsp;bold(J))<br>
+                $<br>
+                <br>
+                =&nbsp;境界<br>
+                <br>
+                $&nbsp;<br>
+                &nbsp;&nbsp;bold(n)&nbsp;times&nbsp;(bold(H)_1&nbsp;-&nbsp;bold(H)_2)&nbsp;&amp;=&nbsp;0\<br>
+                &nbsp;&nbsp;bold(n)&nbsp;dot&nbsp;(bold(B)_1&nbsp;-&nbsp;bold(B)_2)&nbsp;&amp;=&nbsp;0<br>
+                $<br>
+                <br>
+                =&nbsp;サイクロトロン<br>
+                <br>
+                $&nbsp;<br>
+                &nbsp;&nbsp;(m&nbsp;v^2)&nbsp;/&nbsp;R&nbsp;&amp;=&nbsp;q&nbsp;v&nbsp;B\<br>
+                &nbsp;&nbsp;omega&nbsp;=&nbsp;v&nbsp;/&nbsp;R&nbsp;&amp;=&nbsp;(q&nbsp;B)&nbsp;/&nbsp;m<br>
+                $<br>
+            </code>
+        </div>
+    </main>
+    <script type="application/json" id="pageInfo">
+        {
+            "createdAt": "2024-07-24T14:02:00.000Z",
+            "updatedAt": "2024-07-24T14:02:00.000Z"
+        }
+    </script>
+
+    <!-- "alwaysRefresh": true -->
+
+</body>
+
+</html>
