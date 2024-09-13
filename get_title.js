@@ -38,6 +38,7 @@ const dirPath = './docs';
     };
 
     const hrefs = [];
+    const visitedLinks = new Set(); // 既にアクセスしたURLを保存するセット
     const files = await searchFiles(dirPath);
 
     spinner.succeed(`${files.length}件のページを検出`);
@@ -63,23 +64,47 @@ const dirPath = './docs';
         // ページタイトルを取得
         const title = await page.title();
         // 外部リンクを取得
-        const links = await page.$$eval('a', as => as.map(a => ({ href: a.href, text: a.innerText })));
+        // const links = await page.$$eval('a', as => as.map(a => ({ href: a.href, text: a.innerText })));
+        const links = await page.$$eval('a, auto-link', elements =>
+            elements.map(el => ({
+                href: el.tagName.toLowerCase() === 'a' ? el.href : el.getAttribute('href'),
+                text: el.innerText
+            }))
+        );
 
         for (const link of links) {
+            if (!link.href) {
+                console.warn(`Skipping a link with undefined href`);
+                continue;
+            }
+
             const parsedUrl = parse(link.href);
-            if (parsedUrl.host && !parsedUrl.host.includes('localhost')) {
+            // 外部リンクであり、まだアクセスしていない場合のみ処理する
+            if (parsedUrl.host && !parsedUrl.host.includes('localhost') && !visitedLinks.has(link.href)) {
+                visitedLinks.add(link.href); // URLをセットに追加
+
                 let linkTitle = link.text.replace(/"/g, '""');
                 let linkContentType = 'unknown';
-                try {
-                    await page.goto(link.href);
-                    const externalTitle = await page.title();
-                    linkContentType = response.headers()['content-type'];
-                    if (externalTitle && externalTitle.trim()) {
-                        linkTitle = externalTitle.replace(/"/g, '""');
+                let retries = 10; // 最大リトライ回数
+
+                while (retries > 0) {
+                    try {
+                        const externalResponse = await page.goto(link.href);
+                        const externalTitle = await page.title();
+                        linkContentType = externalResponse.headers()['content-type'];
+                        if (externalTitle && externalTitle.trim()) {
+                            linkTitle = externalTitle.replace(/"/g, '""');
+                        }
+                        break; // 成功したらループを抜ける
+                    } catch (error) {
+                        console.error(`Failed to retrieve title for ${link.href} (attempt ${4 - retries}): ${error.message}`);
+                        retries--; // リトライ回数を減らす
+                        if (retries === 0) {
+                            console.error(`Giving up on ${link.href}`);
+                        }
                     }
-                } catch (error) {
-                    console.error(`Failed to retrieve title for ${link.href}`);
                 }
+
                 hrefs.push({
                     url: link.href,
                     title: linkTitle,
