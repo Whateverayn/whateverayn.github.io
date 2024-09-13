@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: https://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual hard disk の最適化</title>
+    <meta property="og:title" content="Virtual hard disk の最適化" />
+    <meta name="description" content="仮想マシンで使う仮想ハードディスクを最適化する方法">
+    <meta property="og:description" content="仮想マシンで使う仮想ハードディスクを最適化する方法" />
+    <meta property="og:site_name" content="Whateverayn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
+    <meta name="twitter:card" content="Summary Card" />
+    <meta name="theme-color" content="#363663">
+    <link rel="icon" href="/icons/icon-2.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="stylesheet" href="/core.css">
+    <script defer="defer" src="/core.js"></script>
+</head>
+
+<body>
+    <main id="root">
+        <p>2024(令和6)年9月14日土曜日</p>
+        <p>
+            ディスク領域を空けたいときに実施しました.
+            以下のページを参考にしました.
+        </p>
+        <ul>
+            <li>
+                <auto-link href="https://www.wabiapp.com/PronamaStudy/etc/diet_vhd.html"></auto-link>
+            </li>
+            <li>
+                <auto-link href="https://kmconner.net/posts/2019/04/08-vdisk-hyper-v/"></auto-link>
+            </li>
+            <li>
+                <auto-link href="https://karafuru-ramune.com/blog/51b4c86f8911836a6843f38fe1e9e4fa"></auto-link>
+            </li>
+            <li>
+                <auto-link href="https://7me.nobiki.com/2020/01/29/virtualbox-vdi-disk-size-compact/"></auto-link>
+            </li>
+        </ul>
+        <h2>仮想環境</h2>
+        <h3>Windows</h3>
+        <p>
+            を参考にして, ゴミ箱を空にしたり, 不要なファイルを消したりしたあと,
+            <a href="https://learn.microsoft.com/ja-jp/sysinternals/downloads/sdelete">SDelete</a>
+            を使います.
+            ただし,
+            <a href="https://www.wabiapp.com/PronamaStudy/etc/diet_vhd.html">記事</a>
+            中の SDelete のダウンロードリンクが古いようなので,
+            <auto-link href="https://learn.microsoft.com/ja-jp/sysinternals/downloads/sdelete"></auto-link>
+            からダウンロードします.
+        </p>
+        <h3>Linux (Ubuntu)</h3>
+        <p>
+            Live CDで起動し,
+        </p>
+        <div class="generalCode">
+            <code>
+                    sudo apt install zerofree<br>
+                    sudo zerofree -v /dev/sda2
+            </code>
+        </div>
+        <p>
+            とすればよいです.
+            <code class="generalInlineCode">sda2</code>
+            の部分は状況に応じて異なります.
+            <code class="generalInlineCode">-v</code>
+            で進歩がわかるようになります.
+        </p>
+        <h2>ホスト側</h2>
+        <h3>Hyper-V (VHDX)</h3>
+        <p>
+            .vhdx ファイルのあるディレクトリで,
+        </p>
+        <div class="generalCode">
+            <code>
+                Optimize-VHD -Path ".\hoge.vhdx" -Mode Full
+            </code>
+        </div>
+        <p>
+            を実行すればよいです.
+        </p>
+        <h3>VirtualBox (VDI)</h3>
+        <p>
+            <code class="generalInlineCode">C:\Program Files\Oracle\VirtualBox</code>
+            のパスを通すか, そのディレクトリで,
+        </p>
+        <div class="generalCode">
+            <code>
+                VBoxManage modifyhd .\hoge.vdi --compact
+            </code>
+        </div>
+        <p>
+            を実行します.
+        </p>
+
+    </main>
+    <script type="application/json" id="pageInfo">
+        {
+            "createdAt": "2024-07-24T14:02:00.000Z",
+            "updatedAt": "2024-07-24T14:02:00.000Z"
+        }
+    </script>
+
+    <!-- "alwaysRefresh": true -->
+
+</body>
+
+</html>
