@@ -86,10 +86,11 @@ const dirPath = './docs';
                 let linkTitle = link.text.replace(/"/g, '""');
                 let linkContentType = 'unknown';
                 let retries = 10; // 最大リトライ回数
+                const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
                 while (retries > 0) {
                     try {
-                        const externalResponse = await page.goto(link.href);
+                        const externalResponse = await page.goto(link.href, { waitUntil: ['domcontentloaded', 'load', 'networkidle0', 'networkidle2'] });
                         const externalTitle = await page.title();
                         linkContentType = externalResponse.headers()['content-type'];
                         if (externalTitle && externalTitle.trim()) {
@@ -97,10 +98,13 @@ const dirPath = './docs';
                         }
                         break; // 成功したらループを抜ける
                     } catch (error) {
-                        console.error(`Failed to retrieve title for ${link.href} (attempt ${4 - retries}): ${error.message}`);
+                        console.error(`Failed to retrieve title for ${link.href} (attempt ${11 - retries}): ${error.message}`);
                         retries--; // リトライ回数を減らす
                         if (retries === 0) {
                             console.error(`Giving up on ${link.href}`);
+                        } else {
+                            console.log(`Retrying in 1 second...`);
+                            await delay(1000); // 1秒待機
                         }
                     }
                 }
@@ -136,6 +140,13 @@ const dirPath = './docs';
         .map(url => {
             return hrefs.find(href => href.url === url);
         });
+
+    // 特定のURLのcontentTypeを強制的に上書き
+    uniqueHrefs.forEach(href => {
+        if (href.url === "https://whateverayn.github.io/index.html") {
+            href.contentType = "text/html";
+        }
+    });
 
     // 名前順にソート
     uniqueHrefs.sort((a, b) => a.title.localeCompare(b.title));
