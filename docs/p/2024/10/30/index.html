@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: https://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電磁波 (中間)</title>
+    <meta property="og:title" content="電磁波 (中間)" />
+    <meta name="description" content="試験前に作ったものです.">
+    <meta property="og:description" content="試験前に作ったものです." />
+    <meta property="og:site_name" content="Whateverayn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
+    <meta name="twitter:card" content="Summary Card" />
+    <meta name="theme-color" content="#363663">
+    <link rel="icon" href="/icons/icon-2.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="stylesheet" href="/core.css">
+    <script defer="defer" src="/core.js"></script>
+</head>
+
+<body>
+    <main id="root">
+        <p>2024(令和6)年10月30日水曜日</p>
+        <h2>ポインティングベクトル など</h2>
+        <p>PDF:
+            <auto-link href="./2024-10-30.pdf">
+                <a href="./2024-10-30.pdf">PDF</a>
+            </auto-link>
+        </p>
+        <div class="svg_page">
+            <img class="svgAdaptive" src="/imgs/math/2024-10-30.svg" width="793.701" height="2651.285" loading="lazy"
+                alt="2024-10-30.pdfをSVGにしたもの">
+        </div>
+        <p>
+            <auto-link href="/feedback/">/feedback/</auto-link>
+        </p>
+
+        <div class="generalCode">
+            <code>
+                =&nbsp;波の速さ<br>
+                <br>
+                -&nbsp;波の速さ:&nbsp;$v&nbsp;space&nbsp;[upright(m)\/upright(s)],&nbsp;quad$&nbsp;波長:&nbsp;$lambda&nbsp;space&nbsp;[upright(m)],&nbsp;quad$&nbsp;周期:&nbsp;$T&nbsp;space&nbsp;[upright(s)],&nbsp;quad$&nbsp;周波数:&nbsp;$f&nbsp;space&nbsp;[upright(H&nbsp;z)]$<br>
+                <br>
+                $&nbsp;v=lambda/T=f&nbsp;lambda&nbsp;$<br>
+                <br>
+                =&nbsp;マクスウェル方程式<br>
+                <br>
+                ==&nbsp;電場に関するガウスの法則<br>
+                <br>
+                -&nbsp;湧き出す電束密度&nbsp;$bold(D)$&nbsp;は電荷&nbsp;$rho$&nbsp;に等しい<br>
+                <br>
+                $&nbsp;bold(nabla)&nbsp;dot&nbsp;bold(D)&nbsp;=&nbsp;"div"&nbsp;bold(D)&nbsp;=&nbsp;rho&nbsp;$<br>
+                <br>
+                ==&nbsp;磁場に関するガウスの法則<br>
+                <br>
+                -&nbsp;磁束密度&nbsp;$bold(B)$&nbsp;は湧き出さない&nbsp;(増減しない)<br>
+                <br>
+                $&nbsp;bold(nabla)&nbsp;dot&nbsp;bold(B)&nbsp;=&nbsp;"div"&nbsp;bold(B)&nbsp;=&nbsp;0&nbsp;$<br>
+                <br>
+                ==&nbsp;ファラデーの電磁誘導の法則<br>
+                <br>
+                -&nbsp;時間変化する磁束密度&nbsp;$bold(B)$&nbsp;は,&nbsp;周囲に渦状の電場&nbsp;$bold(E)$&nbsp;を生成する<br>
+                <br>
+                $&nbsp;bold(nabla)&nbsp;times&nbsp;bold(E)&nbsp;=&nbsp;"rot"&nbsp;bold(E)&nbsp;=&nbsp;-&nbsp;(partial&nbsp;bold(B))/(partial&nbsp;t)&nbsp;$<br>
+                <br>
+                ==&nbsp;アンペール・マクスウェルの法則<br>
+                <br>
+                -&nbsp;磁場の強さ&nbsp;$bold(H)$&nbsp;は,&nbsp;電流密度&nbsp;$bold(J)$&nbsp;と時間変化する電場&nbsp;$bold(E)$&nbsp;によって生成される<br>
+                <br>
+                $&nbsp;bold(nabla)&nbsp;times&nbsp;bold(H)&nbsp;=&nbsp;"rot"&nbsp;bold(H)&nbsp;=&nbsp;bold(J)+(partial&nbsp;bold(D))/(partial&nbsp;t)&nbsp;$<br>
+                <br>
+                ==&nbsp;ポインティングベクトル&nbsp;$(bold(S)&nbsp;=&nbsp;bold(E)&nbsp;times&nbsp;bold(H))$<br>
+                <br>
+                -&nbsp;単位時間,&nbsp;単位面積当たりに流れる電磁エネルギーを表すベクトル量<br>
+                <br>
+                $<br>
+                &nbsp;&nbsp;S_n&nbsp;=&nbsp;-&nbsp;E&nbsp;H,&nbsp;quad&nbsp;E&nbsp;=&nbsp;R&nbsp;I,&nbsp;quad&nbsp;H&nbsp;=&nbsp;I/(2&nbsp;pi&nbsp;r)\<br>
+                &nbsp;&nbsp;P&nbsp;=&nbsp;integral_S_1&nbsp;(-&nbsp;E&nbsp;H)&nbsp;d&nbsp;S&nbsp;=&nbsp;-&nbsp;(R&nbsp;I^2)/(2&nbsp;pi&nbsp;r)&nbsp;dot&nbsp;2&nbsp;pi&nbsp;r&nbsp;dot&nbsp;1&nbsp;=&nbsp;-&nbsp;R&nbsp;I^2&nbsp;space&nbsp;[upright(W)]<br>
+                $<br>
+                <br>
+                =&nbsp;波動方程式<br>
+                <br>
+                $&nbsp;bold(nabla)^2&nbsp;bold(E)&nbsp;=&nbsp;epsilon&nbsp;mu&nbsp;(partial^2&nbsp;bold(E))/(partial&nbsp;t^2),&nbsp;quad&nbsp;bold(nabla)^2&nbsp;bold(H)&nbsp;=&nbsp;epsilon&nbsp;mu&nbsp;(partial^2&nbsp;bold(H))/(partial&nbsp;t^2)&nbsp;$<br>
+                <br>
+                =&nbsp;真空の光速度<br>
+                <br>
+                $&nbsp;c&nbsp;=&nbsp;1/(sqrt(epsilon_0&nbsp;mu_0))&nbsp;space&nbsp;[upright(m)\/upright(s)]&nbsp;$<br>
+                <br>
+                =&nbsp;特性インピーダンス&nbsp;$(eta)$<br>
+                <br>
+                -&nbsp;真空:&nbsp;$377&nbsp;ohm$<br>
+                <br>
+                $&nbsp;E/H&nbsp;=&nbsp;eta&nbsp;=&nbsp;sqrt(mu/epsilon)&nbsp;space[upright(ohm)]&nbsp;$<br>
+                <br>
+                =&nbsp;境界条件<br>
+                <br>
+                -&nbsp;$D_(1&nbsp;upright(n))&nbsp;=&nbsp;D_(2&nbsp;upright(n))$:&nbsp;*誘電率*の異なる界面では,&nbsp;*電束密度*&nbsp;$bold(D)$&nbsp;の境界面に*垂直*な成分が保存される<br>
+                -&nbsp;$E_(1&nbsp;upright(t))&nbsp;=&nbsp;E_(2&nbsp;upright(t))$:&nbsp;*誘電率*の異なる界面では,&nbsp;*電場*&nbsp;$bold(E)$&nbsp;の境界面に*平行*な成分が保存される<br>
+                -&nbsp;$B_(1&nbsp;upright(n))&nbsp;=&nbsp;B_(2&nbsp;upright(n))$:&nbsp;*透磁率*の異なる界面では,&nbsp;*磁束密度*&nbsp;$bold(B)$&nbsp;の境界面に*垂直*な成分が保存される<br>
+                -&nbsp;$H_(1&nbsp;upright(t))&nbsp;=&nbsp;H_(2&nbsp;upright(t))$:&nbsp;*透磁率*の異なる界面では,&nbsp;*磁場の強さ*&nbsp;$bold(H)$&nbsp;の境界面に*平行*な成分が保存される<br>
+                <br>
+                =&nbsp;スネルの法則<br>
+                <br>
+                $<br>
+                &nbsp;&nbsp;"反射の法則:"&nbsp;&&nbsp;theta_upright(i)&nbsp;=&nbsp;theta_upright(r)&nbsp;&&&nbsp;("平面波の入射角:"&nbsp;theta_upright(i),&nbsp;quad&nbsp;"反射角:"&nbsp;theta_upright(r),&nbsp;quad&nbsp;"透過角:"&nbsp;theta_upright(t))\<br>
+                &nbsp;&nbsp;"スネルの法則:"&nbsp;&&nbsp;k_i&nbsp;sin&nbsp;theta_upright(i)&nbsp;=&nbsp;k_2&nbsp;sin&nbsp;theta_upright(t)&nbsp;&&&nbsp;("入射側波数:"&nbsp;k_1&nbsp;space[upright(m)^(-1)],&nbsp;quad&nbsp;"透過側波数:"&nbsp;k_2&nbsp;space&nbsp;[upright(m)^(-1)])\<br>
+                &nbsp;&nbsp;&&nbsp;n_1&nbsp;sin&nbsp;theta_upright(i)&nbsp;=&nbsp;n_2&nbsp;sin&nbsp;theta_upright(t)&nbsp;space&nbsp;&&&nbsp;("入射側媒質の屈折率:"&nbsp;n_1,&nbsp;quad&nbsp;"透過側媒質の屈折率:"&nbsp;n_2)<br>
+                $<br>
+                <br>
+                =&nbsp;フレネルの公式<br>
+                <br>
+                $<br>
+                &nbsp;&nbsp;r_upright(s)&nbsp;&=&nbsp;(n_1&nbsp;cos&nbsp;theta_upright(i)&nbsp;-&nbsp;n_2&nbsp;cos&nbsp;theta_upright(t))/(n_1&nbsp;cos&nbsp;theta_upright(i)&nbsp;+&nbsp;n_2&nbsp;cos&nbsp;theta_upright(t))\<br>
+                &nbsp;&nbsp;t_upright(s)&nbsp;&=&nbsp;(2&nbsp;n_1&nbsp;cos&nbsp;theta_upright(i))/(n_1&nbsp;cos&nbsp;theta_upright(i)&nbsp;+&nbsp;n_2&nbsp;cos&nbsp;theta_upright(t))\<br>
+                &nbsp;&nbsp;r_upright(p)&nbsp;&=&nbsp;(n_2&nbsp;cos&nbsp;theta_upright(i)&nbsp;-&nbsp;n_1&nbsp;cos&nbsp;theta_upright(t))/(n_2&nbsp;cos&nbsp;theta_upright(i)&nbsp;+&nbsp;n_1&nbsp;cos&nbsp;theta_upright(t))\<br>
+                &nbsp;&nbsp;t_upright(p)&nbsp;&=&nbsp;(2&nbsp;n_1&nbsp;cos&nbsp;theta_upright(i))/(n_2&nbsp;cos&nbsp;theta_upright(i)&nbsp;+&nbsp;n_1&nbsp;cos&nbsp;theta_upright(t))<br>
+                $<br>
+                <br>
+                =&nbsp;電場反射率と強度反射率<br>
+                <br>
+                $<br>
+                &nbsp;&nbsp;"強度反射率:"&nbsp;&&&nbsp;R&nbsp;&=&nbsp;r^2\<br>
+                &nbsp;&nbsp;"強度透過率:"&nbsp;&&&nbsp;T&nbsp;&=&nbsp;(n_2&nbsp;cos&nbsp;theta_upright(t))/(n_1&nbsp;cos&nbsp;theta_upright(i))&nbsp;t^2\<br>
+                &nbsp;&nbsp;&&&nbsp;R&nbsp;+&nbsp;T&nbsp;&=&nbsp;1<br>
+                $<br>
+                <br>
+                =&nbsp;エバネッセント波<br>
+                <br>
+                $&nbsp;"染み出し深さ:"&nbsp;d&nbsp;=&nbsp;(lambda)/(2&nbsp;pi&nbsp;sqrt((n_1&nbsp;sin&nbsp;theta_1)^2&nbsp;-&nbsp;(n_2)^2))&nbsp;quad&nbsp;(lambda:&nbsp;"入射光の波長")&nbsp;$<br>
+            </code>
+        </div>
+    </main>
+    <script type="application/json" id="pageInfo">
+        {
+            "createdAt": "2024-10-30T13:37:00.000Z",
+            "updatedAt": "2024-10-30T13:37:00.000Z"
+        }
+    </script>
+
+    <!-- "alwaysRefresh": true -->
+
+</body>
+
+</html>
