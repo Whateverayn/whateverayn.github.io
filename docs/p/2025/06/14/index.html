@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head prefix="og: https://ogp.me/ns#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anacondaの(base)環境の自動有効化を制御する</title>
+    <meta property="og:title" content="Anacondaの(base)環境の自動有効化を制御する" />
+    <meta name="description" content="ターミナルに勝手に表示される(base)環境の自動有効化をオフにする方法と, 手動での切り替え方法について.">
+    <meta property="og:description" content="ターミナルに勝手に表示される(base)環境の自動有効化をオフにする方法と, 手動での切り替え方法について." />
+    <meta property="og:site_name" content="Whateverayn" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="https://whateverayn.github.io/imgs/general_og_img.png" />
+    <meta name="twitter:card" content="Summary Card" />
+    <meta name="theme-color" content="#363663">
+    <link rel="icon" href="/icons/icon-2.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icons/icon-180.png">
+    <link rel="stylesheet" href="/core.css">
+    <script defer="defer" src="/core.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Anacondaの(base)環境の自動有効化を制御する",
+      "datePublished": "2024-06-13T15:30:00Z",
+      "dateModified": "2024-06-13T15:30:00Z",
+      "author": {
+        "@type": "Person",
+        "name": "Whateverayn"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Whateverayn",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://whateverayn.github.io/icons/icon-2.svg"
+        }
+      },
+      "description": "ターミナルに勝手に表示される(base)環境の自動有効化をオフにする方法と, 手動での切り替え方法について."
+    }
+    </script>
+</head>
+
+<body>
+    <main id="root">
+        <p>2024(令和6)年6月14日土曜日</p>
+
+        <p>
+            Anacondaをインストールした後, ターミナルを開くたびにプロンプトの先頭に<code class="generalInlineCode">(base)</code>と表示され, <code class="generalInlineCode">base</code>環境が自動で有効化されるようになる.
+            この自動有効化をオフにする方法と, 必要な時に手動で<code class="generalInlineCode">(base)</code>環境を有効/無効にする方法について残す.
+        </p>
+
+        <h2>ターミナル起動時の(base)環境自動有効化をオフにする</h2>
+        <p>
+            Anacondaをインストールした際, デフォルトで設定されるこの挙動は, <code class="generalInlineCode">conda config</code>コマンドで変更できる. 
+        </p>
+        <div class="generalCode">
+            <pre><code>conda config --set auto_activate_base false</code></pre>
+        </div>
+        <p>
+            このコマンドを実行後, 新しいターミナルを開くと, プロンプトの先頭に<code class="generalInlineCode">(base)</code>が表示されなくなり, <code class="generalInlineCode">base</code>環境が自動で有効化されなくなる. 
+        </p>
+        <p>
+            もし, 再び自動有効化をオンにしたい場合は, <code class="generalInlineCode">false</code>を<code class="generalInlineCode">true</code>に変更して同じコマンドを実行すればよい. 
+        </p>
+        <div class="generalCode">
+            <pre><code>conda config --set auto_activate_base true</code></pre>
+        </div>
+
+        <h2>手動で(base)環境を有効/無効にする</h2>
+
+        <h3>(base)環境を手動で有効にする</h3>
+
+        <div class="generalCode">
+            <pre><code>conda activate base</code></pre>
+        </div>
+        <p>
+            このコマンドを実行すると, 現在のターミナルセッションで<code class="generalInlineCode">base</code>環境が有効になり, プロンプトの先頭に<code class="generalInlineCode">(base)</code>が表示される. 
+            Anacondaのルート環境にあるパッケージ（Python, Jupyterなど）を利用したい場合に実行する. 
+        </p>
+
+        <h3>(base)環境を手動で無効にする</h3>
+
+        <div class="generalCode">
+            <pre><code>conda deactivate</code></pre>
+        </div>
+        <p>
+            このコマンドを実行すると, <code class="generalInlineCode">(base)</code>の表示が消え, <code class="generalInlineCode">base</code>環境が無効化される. 
+            これで通常の環境に戻って来れる.
+        </p>
+
+        <hr>
+        <p>
+            意見や感想などがあれば, 
+            <auto-link href="/feedback/">/feedback/</auto-link>
+            よりお知らせください.
+        </p>
+    </main>
+        <script type="application/json" id="pageInfo">
+        {
+            "createdAt": "2024-06-13T15:30:00.000Z",
+            "updatedAt": "2024-06-13T15:30:00.000Z"
+        }
+    </script>
+    <!-- "alwaysRefresh": true -->
+</body>
+
+</html>
