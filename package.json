@@ -21,10 +21,11 @@
   },
   "homepage": "https://github.com/Whateverayn/whateverayn.github.io#readme",
   "dependencies": {
+    "csv-parser": "^3.2.0",
     "csv-writer": "^1.6.0",
-    "ora": "^8.0.1",
+    "ora": "^8.2.0",
     "pdf-parse": "^1.1.1",
     "pdfjs-dist": "^4.3.136",
-    "puppeteer": "^22.10.0"
+    "puppeteer": "^22.15.0"
   }
 }
