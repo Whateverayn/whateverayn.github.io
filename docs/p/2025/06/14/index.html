@@ -55,7 +55,7 @@
             Anacondaをインストールした際, デフォルトで設定されるこの挙動は, <code class="generalInlineCode">conda config</code>コマンドで変更できる. 
         </p>
         <div class="generalCode">
-            <pre><code>conda config --set auto_activate_base false</code></pre>
+            <code>conda config --set auto_activate_base false</code>
         </div>
         <p>
             このコマンドを実行後, 新しいターミナルを開くと, プロンプトの先頭に<code class="generalInlineCode">(base)</code>が表示されなくなり, <code class="generalInlineCode">base</code>環境が自動で有効化されなくなる. 
@@ -64,7 +64,7 @@
             もし, 再び自動有効化をオンにしたい場合は, <code class="generalInlineCode">false</code>を<code class="generalInlineCode">true</code>に変更して同じコマンドを実行すればよい. 
         </p>
         <div class="generalCode">
-            <pre><code>conda config --set auto_activate_base true</code></pre>
+            <code>conda config --set auto_activate_base true</code>
         </div>
 
         <h2>手動で(base)環境を有効/無効にする</h2>
@@ -72,7 +72,7 @@
         <h3>(base)環境を手動で有効にする</h3>
 
         <div class="generalCode">
-            <pre><code>conda activate base</code></pre>
+            <code>conda activate base</code>
         </div>
         <p>
             このコマンドを実行すると, 現在のターミナルセッションで<code class="generalInlineCode">base</code>環境が有効になり, プロンプトの先頭に<code class="generalInlineCode">(base)</code>が表示される. 
@@ -82,7 +82,7 @@
         <h3>(base)環境を手動で無効にする</h3>
 
         <div class="generalCode">
-            <pre><code>conda deactivate</code></pre>
+            <code>conda deactivate</code>
         </div>
         <p>
             このコマンドを実行すると, <code class="generalInlineCode">(base)</code>の表示が消え, <code class="generalInlineCode">base</code>環境が無効化される. 
