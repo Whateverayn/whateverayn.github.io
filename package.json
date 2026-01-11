@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "title": "node get_title.js"
+    "title": "node get_title_m.js"
   },
   "repository": {
     "type": "git",
