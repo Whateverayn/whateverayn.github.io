@@ -196,7 +196,12 @@ const searchFiles = (currentDirPath) => {
                         continue; // href属性がないリンクはスキップ
                     }
 
-                    const parsedUrl = parse(link.href);
+                    let parsedUrl;
+                    try {
+                        parsedUrl = new URL(link.href); // URLの解析
+                    } catch (error) {
+                        continue;
+                    }
                     // 外部リンクであり、まだアクセスしていない、かつローカルホストではない場合のみ処理
                     if (parsedUrl.host && !parsedUrl.host.includes('localhost') && !visitedExternalLinks.has(link.href)) {
                         visitedExternalLinks.add(link.href); // 既に訪問したURLとしてマーク
